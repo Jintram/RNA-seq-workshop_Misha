@@ -1,83 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>episodes/01-introduction.qmd.qmd/index.html</loc>
-    <lastmod>2025-05-27T13:41:00.438Z</lastmod>
+    <loc>episodes/00-introduction.qmd/about.html</loc>
+    <lastmod>2025-05-27T12:43:17.707Z</lastmod>
   </url>
   <url>
-    <loc>episodes/01-introduction.qmd.qmd/episodes/01-introduction.html</loc>
-    <lastmod>2025-05-27T14:01:26.351Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd.qmd/episodes/02-experimental-considerations.html</loc>
-    <lastmod>2025-05-27T14:12:45.222Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd.qmd/episodes/03-mapping-reads.html</loc>
-    <lastmod>2025-05-27T13:40:45.906Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd.qmd/episodes/04-differential-gene-expression.html</loc>
-    <lastmod>2025-05-27T13:40:54.654Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd/episodes/02-experimental-considerations.html</loc>
-    <lastmod>2025-05-28T14:18:37.221Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd/index.html</loc>
-    <lastmod>2025-05-28T12:20:32.871Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd/episodes/01-introduction.html</loc>
-    <lastmod>2025-05-28T12:20:32.871Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd/episodes/04-differential-gene-expression.html</loc>
-    <lastmod>2025-05-27T13:40:54.654Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd/episodes/03-mapping-reads.html</loc>
-    <lastmod>2025-05-28T14:40:23.753Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/01-introduction.qmd/episodes/01-setup.html</loc>
+    <loc>episodes/00-introduction.qmd/episodes/01-setup.html</loc>
     <lastmod>2025-05-28T14:56:05.578Z</lastmod>
   </url>
   <url>
-    <loc>index.qmd/index.html</loc>
-    <lastmod>2025-05-28T15:02:23.808Z</lastmod>
-  </url>
-  <url>
-    <loc>index.qmd/episodes/01-setup.html</loc>
-    <lastmod>2025-05-28T14:56:05.578Z</lastmod>
-  </url>
-  <url>
-    <loc>index.qmd/episodes/02-experimental-considerations.html</loc>
-    <lastmod>2025-05-28T14:18:37.221Z</lastmod>
-  </url>
-  <url>
-    <loc>index.qmd/episodes/03-mapping-reads.html</loc>
+    <loc>episodes/00-introduction.qmd/episodes/03-mapping-reads.html</loc>
     <lastmod>2025-05-28T14:40:23.753Z</lastmod>
   </url>
   <url>
-    <loc>index.qmd/episodes/04-differential-gene-expression.html</loc>
+    <loc>episodes/00-introduction.qmd/episodes/04-differential-gene-expression.html</loc>
     <lastmod>2025-05-27T13:40:54.654Z</lastmod>
   </url>
   <url>
-    <loc>index.qmd/episodes/00-introduction.html</loc>
-    <lastmod>2025-05-28T12:20:32.871Z</lastmod>
-  </url>
-  <url>
-    <loc>episodes/00-introduction.qmd/index.html</loc>
-    <lastmod>2025-05-28T15:02:23.808Z</lastmod>
+    <loc>episodes/00-introduction.qmd/episodes/02-experimental-considerations.html</loc>
+    <lastmod>2025-05-28T14:18:37.221Z</lastmod>
   </url>
   <url>
     <loc>episodes/00-introduction.qmd/episodes/00-introduction.html</loc>
     <lastmod>2025-05-28T12:20:32.871Z</lastmod>
   </url>
   <url>
-    <loc>episodes/00-introduction.qmd/episodes/01-setup.html</loc>
-    <lastmod>2025-05-28T14:56:05.578Z</lastmod>
+    <loc>episodes/00-introduction.qmd/index.html</loc>
+    <lastmod>2025-05-28T15:02:23.808Z</lastmod>
   </url>
 </urlset>

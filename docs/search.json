@@ -7,83 +7,6 @@
     "text": "About this site"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Introduction",
-    "section": "",
-    "text": "Welcome to the RNA-seq workshop of the bioDSC. This workshop will introduce you to the basics of gene expression analysis using RNA-Seq. It is going to be fun and empowering! You will discover how the total RNA pool of an organism is converted to short sequences called “reads” that can in turn be used to get insights into gene expression. Through careful experimental design, this gene expression information can answer research questions and offer biological insights.\nThe workshop consists of two core parts:\n\nBioinformatics: Quality control of the reads, mapping reads to a reference genome, and count the number of reads per gene. This will give us a count table!\nDifferential gene expression: We will use DESeq2 to discover differentially expressed genes in certain conditions. DESeq2 will use your count table as input.\n\nThe materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own speed. Regardless of how you go through the materials, we hope that you will learn something useful!"
-  },
-  {
-    "objectID": "episodes/01-introduction.html",
-    "href": "episodes/01-introduction.html",
-    "title": "Introduction",
-    "section": "",
-    "text": "Welcome to the RNA-seq workshop of the bioDSC. This workshop will introduce you to the basics of gene expression analysis using RNA-Seq. It is going to be fun and empowering! You will discover how the total RNA pool of an organism is converted to short sequences called “reads” that can in turn be used to get insights into gene expression. Through careful experimental design, this gene expression information can answer research questions and offer biological insights.\nThe workshop consists of two core parts:\n\nBioinformatics: Quality control of the reads, mapping reads to a reference genome, and count the number of reads per gene. This will give us a count table!\nDifferential gene expression: We will use DESeq2 to discover differentially expressed genes in certain conditions. DESeq2 will use your count table as input.\n\nThe materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own speed. Regardless of how you go through the materials, we hope that you will learn something useful!",
-    "crumbs": [
-      "Introduction"
-    ]
-  },
-  {
-    "objectID": "episodes/01-introduction.html#welcome",
-    "href": "episodes/01-introduction.html#welcome",
-    "title": "Introduction",
-    "section": "",
-    "text": "Welcome to the RNA-seq workshop of the bioDSC. This workshop will introduce you to the basics of gene expression analysis using RNA-Seq. It is going to be fun and empowering! You will discover how the total RNA pool of an organism is converted to short sequences called “reads” that can in turn be used to get insights into gene expression. Through careful experimental design, this gene expression information can answer research questions and offer biological insights.\nThe workshop consists of two core parts:\n\nBioinformatics: Quality control of the reads, mapping reads to a reference genome, and count the number of reads per gene. This will give us a count table!\nDifferential gene expression: We will use DESeq2 to discover differentially expressed genes in certain conditions. DESeq2 will use your count table as input.\n\nThe materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own speed. Regardless of how you go through the materials, we hope that you will learn something useful!",
-    "crumbs": [
-      "Introduction"
-    ]
-  },
-  {
-    "objectID": "episodes/01-introduction.html#learning-objectives",
-    "href": "episodes/01-introduction.html#learning-objectives",
-    "title": "Introduction",
-    "section": "Learning objectives",
-    "text": "Learning objectives\nAfter this workshop, you should be able to:\n\nIdentify good practices when designing a RNA-Seq experiment\nAssess the quality of RNA-seq sequencing data (“reads”) using the command-line instructions\nAlign RNA-seq reads to a reference genome using a splice-aware aligner (e.g. STAR).\nGenerate a count matrix from the RNA-seq data alignment\nPerform a QC of your experiment through Principal Component Analysis (PCA) and sample clustering.\nExecute a differential gene expression analysis using R and the DESeq2 package.\nBe able to create key plots: volcano plot, heatmap and clustering of differentially expressed genes.",
-    "crumbs": [
-      "Introduction"
-    ]
-  },
-  {
-    "objectID": "episodes/01-introduction.html#schedule",
-    "href": "episodes/01-introduction.html#schedule",
-    "title": "Introduction",
-    "section": "Schedule",
-    "text": "Schedule\ninsert table here",
-    "crumbs": [
-      "Introduction"
-    ]
-  },
-  {
-    "objectID": "episodes/03-mapping-reads.html#trimming-trimmomatic",
-    "href": "episodes/03-mapping-reads.html#trimming-trimmomatic",
-    "title": "From fastq files to alignments",
-    "section": "Trimming: trimmomatic",
-    "text": "Trimming: trimmomatic",
-    "crumbs": [
-      "From fastq files to alignments"
-    ]
-  },
-  {
-    "objectID": "episodes/03-mapping-reads.html#mapping-hisat2",
-    "href": "episodes/03-mapping-reads.html#mapping-hisat2",
-    "title": "From fastq files to alignments",
-    "section": "Mapping: hisat2",
-    "text": "Mapping: hisat2",
-    "crumbs": [
-      "From fastq files to alignments"
-    ]
-  },
-  {
-    "objectID": "episodes/03-mapping-reads.html#counting-featurecounts",
-    "href": "episodes/03-mapping-reads.html#counting-featurecounts",
-    "title": "From fastq files to alignments",
-    "section": "Counting: featureCounts",
-    "text": "Counting: featureCounts",
-    "crumbs": [
-      "From fastq files to alignments"
-    ]
-  },
-  {
     "objectID": "episodes/03-mapping-reads.html",
     "href": "episodes/03-mapping-reads.html",
     "title": "From fastq files to alignments",
@@ -99,6 +22,46 @@
     "title": "From fastq files to alignments",
     "section": "Quality control: fastqc",
     "text": "Quality control: fastqc\nThe first step in the RNA-seq workflow is to assess the quality of the sequencing reads. Sequence reads generated from next-generation sequencing technologies come in the FASTQ file format. This file format evolved from FASTA: it contains sequence data, but also contains quality information. For a single record (sequence read) there are four lines, each of which are described below:\n\n\n\n\n\n\n\nLine\nDescription\n\n\n\n\n1\nAlways begins with ‘@’ and then information about the read\n\n\n2\nThe actual DNA sequence\n\n\n3\nAlways begins with a ‘+’ and sometimes the same info in line 1\n\n\n4\nHas a string of characters which represent the quality scores; must have same number of characters as line 2\n\n\n\nLet’s run fastqc on one sample:\n\n\n\nbash\n\nfastqc -o /workspace/fastqc /datasets/Arabidopsis_sample1.fq.gz\n\n\nDoing this manually for every sample would be quite tiring, especially when we would have many samples. Let’s write a bash for loop to take care of this for us:\n\n\n\nbash\n\n1for filename in  /datasets/*.fq.gz\n  do\n2    fastqc -o fastqc $filename\n  done\n\n\n\n1\n\nHere we define a variable filename that will subsequently get the values of all datasets matching the /datasets/*.fq.gz statement, where * acts as a wildcard.\n\n2\n\nHere we add the actual command, where $filename will subsequently be filled in with all of our four filenames.",
+    "crumbs": [
+      "From fastq files to alignments"
+    ]
+  },
+  {
+    "objectID": "episodes/03-mapping-reads.html#trimming-trimmomatic",
+    "href": "episodes/03-mapping-reads.html#trimming-trimmomatic",
+    "title": "From fastq files to alignments",
+    "section": "Trimming: trimmomatic",
+    "text": "Trimming: trimmomatic",
+    "crumbs": [
+      "From fastq files to alignments"
+    ]
+  },
+  {
+    "objectID": "episodes/03-mapping-reads.html#mapping-star",
+    "href": "episodes/03-mapping-reads.html#mapping-star",
+    "title": "From fastq files to alignments",
+    "section": "Mapping: STAR",
+    "text": "Mapping: STAR\n\nInspecting the mapping on a genome browser",
+    "crumbs": [
+      "From fastq files to alignments"
+    ]
+  },
+  {
+    "objectID": "episodes/03-mapping-reads.html#counting-featurecounts",
+    "href": "episodes/03-mapping-reads.html#counting-featurecounts",
+    "title": "From fastq files to alignments",
+    "section": "Counting: featureCounts",
+    "text": "Counting: featureCounts",
+    "crumbs": [
+      "From fastq files to alignments"
+    ]
+  },
+  {
+    "objectID": "episodes/03-mapping-reads.html#a-note-on-the-specific-tools-used-here",
+    "href": "episodes/03-mapping-reads.html#a-note-on-the-specific-tools-used-here",
+    "title": "From fastq files to alignments",
+    "section": "A note on the specific tools used here",
+    "text": "A note on the specific tools used here\nAs in many things in programming: there are many ways to reach the same goal. Here we have selected mapping, trimming and counting tools that we have available and have experience with, but there are many others that perform just as well. The following table highlights a few popular alternative options:\n\n\n\nTask\nTool used here\nAlternative tools\n\n\n\n\nTrimming\nTrimmomatic\ncutadapt, fastp\n\n\nMapping\nSTAR\nHISAT2\n\n\nCounting\nfeatureCounts\nStringTie",
     "crumbs": [
       "From fastq files to alignments"
     ]
@@ -134,11 +97,11 @@
     ]
   },
   {
-    "objectID": "episodes/02-experimental-considerations.html#randomization-and-reducing-batch-effects",
-    "href": "episodes/02-experimental-considerations.html#randomization-and-reducing-batch-effects",
+    "objectID": "episodes/02-experimental-considerations.html#experimental-design",
+    "href": "episodes/02-experimental-considerations.html#experimental-design",
     "title": "Before the experiment",
-    "section": "Randomization and reducing batch effects",
-    "text": "Randomization and reducing batch effects",
+    "section": "Experimental design",
+    "text": "Experimental design\nIn a typical biological experiment, you will encounter various sources of variation that are either:\n\nDesirable because they are part of your experimental factors. For example, the genotype, treatment, or timepoint.\nUndesirable because you are not interested in them. This could be: batch of RNA isolation, location of plants in the greenhouse, …\n\nUndesirable variation is unavaidable, but there are some practices to limit their impact. First of all, make sure that you don’t confound your experimental factors with undesirable sources of variation. For example, if you have too many samples to isolate RNA in one day of labwork, make sure you don’t isolate RNA from samples with genotype A on day 1, and genotype B on day 2. In this case, you will never be able to know whether genes were differentially expressed because the genotypes of the samples differ (very interesting!) or because RNA was isolated on two different days (not very interesting). Instead, mix your samples of genotype A and B over your two RNA isolation days. Still, you should always record known sources of undesirable variation so you can correct for it later. There’s much more to be said about this, for more details see these materials from Harvard Chan Bioinformatics Core",
     "crumbs": [
       "Before the experiment"
     ]
@@ -152,57 +115,6 @@
     "crumbs": [
       "Before the experiment"
     ]
-  },
-  {
-    "objectID": "episodes/02-experimental-considerations.html#experimental-design",
-    "href": "episodes/02-experimental-considerations.html#experimental-design",
-    "title": "Before the experiment",
-    "section": "Experimental design",
-    "text": "Experimental design\nIn a typical biological experiment, you will encounter various sources of variation that are either:\n\nDesirable because they are part of your experimental factors. For example, the genotype, treatment, or timepoint.\nUndesirable because you are not interested in them. This could be: batch of RNA isolation, location of plants in the greenhouse, …\n\nUndesirable variation is unavaidable, but there are some practices to limit their impact. First of all, make sure that you don’t confound your experimental factors with undesirable sources of variation. For example, if you have too many samples to isolate RNA in one day of labwork, make sure you don’t isolate RNA from samples with genotype A on day 1, and genotype B on day 2. In this case, you will never be able to know whether genes were differentially expressed because the genotypes of the samples differ (very interesting!) or because RNA was isolated on two different days (not very interesting). Instead, mix your samples of genotype A and B over your two RNA isolation days. Still, you should always record known sources of undesirable variation so you can correct for it later. There’s much more to be said about this, for more details see these materials from Harvard Chan Bioinformatics Core",
-    "crumbs": [
-      "Before the experiment"
-    ]
-  },
-  {
-    "objectID": "episodes/03-mapping-reads.html#a-note-on-the-specific-tools-used-here",
-    "href": "episodes/03-mapping-reads.html#a-note-on-the-specific-tools-used-here",
-    "title": "From fastq files to alignments",
-    "section": "A note on the specific tools used here",
-    "text": "A note on the specific tools used here\nAs in many things in programming: there are many ways to reach the same goal. Here we have selected mapping, trimming and counting tools that we have available and have experience with, but there are many others that perform just as well. The following table highlights a few popular alternative options:\n\n\n\nTask\nTool used here\nAlternative tools\n\n\n\n\nTrimming\nTrimmomatic\ncutadapt, fastp\n\n\nMapping\nSTAR\nHISAT2\n\n\nCounting\nfeatureCounts\nStringTie",
-    "crumbs": [
-      "From fastq files to alignments"
-    ]
-  },
-  {
-    "objectID": "episodes/03-mapping-reads.html#mapping-star",
-    "href": "episodes/03-mapping-reads.html#mapping-star",
-    "title": "From fastq files to alignments",
-    "section": "Mapping: STAR",
-    "text": "Mapping: STAR\n\nInspecting the mapping on a genome browser",
-    "crumbs": [
-      "From fastq files to alignments"
-    ]
-  },
-  {
-    "objectID": "index.html#welcome",
-    "href": "index.html#welcome",
-    "title": "Introduction",
-    "section": "",
-    "text": "Welcome to the RNA-seq workshop of the bioDSC. This workshop will introduce you to the basics of gene expression analysis using RNA-Seq. It is going to be fun and empowering! You will discover how the total RNA pool of an organism is converted to short sequences called “reads” that can in turn be used to get insights into gene expression. Through careful experimental design, this gene expression information can answer research questions and offer biological insights.\nThe workshop consists of two core parts:\n\nBioinformatics: Quality control of the reads, mapping reads to a reference genome, and count the number of reads per gene. This will give us a count table!\nDifferential gene expression: We will use DESeq2 to discover differentially expressed genes in certain conditions. DESeq2 will use your count table as input.\n\nThe materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own speed. Regardless of how you go through the materials, we hope that you will learn something useful!"
-  },
-  {
-    "objectID": "index.html#learning-objectives",
-    "href": "index.html#learning-objectives",
-    "title": "Introduction",
-    "section": "Learning objectives",
-    "text": "Learning objectives\nAfter this workshop, you should be able to:\n\nIdentify good practices when designing a RNA-Seq experiment\nAssess the quality of RNA-seq sequencing data (“reads”) using the command-line instructions\nAlign RNA-seq reads to a reference genome using a splice-aware aligner (e.g. STAR).\nGenerate a count matrix from the RNA-seq data alignment\nPerform a QC of your experiment through Principal Component Analysis (PCA) and sample clustering.\nExecute a differential gene expression analysis using R and the DESeq2 package.\nBe able to create key plots: volcano plot, heatmap and clustering of differentially expressed genes."
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Introduction",
-    "section": "Schedule",
-    "text": "Schedule\ninsert table here"
   },
   {
     "objectID": "episodes/00-introduction.html",

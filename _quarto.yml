@@ -1,0 +1,23 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  site-url: episodes/01-introduction.qmd
+  favicon: "images/bioDSC-without-dots-transparent.png"
+  page-navigation: true
+  sidebar:
+    search: false
+    logo: "/images/bioDSC-without-dots-transparent.png"
+    title: bioDSC RNA-seq
+    style: "docked"
+    background: primary
+    foreground: light
+    contents: episodes/*
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+    

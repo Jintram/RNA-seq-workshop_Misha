@@ -1,0 +1,62 @@
+---
+title: "From fastq files to alignments"
+engine: knitr
+format:
+    html:
+        fig-width: 5
+        fig-height: 4
+        code-annotations: hover
+---
+
+The moment is there: you received the FASTQ files from your sequencing provider! Now what?
+
+## Quality control: `fastqc`
+
+The first step in the RNA-seq workflow is to assess the quality of the sequencing reads. Sequence reads generated from next-generation sequencing technologies come in the FASTQ file format. This file format evolved from FASTA: it contains sequence data, but also contains quality information. For a single record (sequence read) there are four lines, each of which are described below:
+
+|Line|Description|
+|----|-----------|
+|1|Always begins with '@' and then information about the read|
+|2|The actual DNA sequence|
+|3|Always begins with a '+' and sometimes the same info in line 1|
+|4|Has a string of characters which represent the quality scores; must have same number of characters as line 2|
+
+Let's run `fastqc` on one sample:
+
+```{bash filename="bash"}
+#| eval: false
+fastqc -o /workspace/fastqc /datasets/Arabidopsis_sample1.fq.gz
+```
+
+Doing this manually for every sample would be quite tiring, especially when we would have many samples. Let's write a `bash` for loop to take care of this for us:
+
+```{bash filename="bash"}
+#| eval: false
+for filename in  /datasets/*.fq.gz # <1>
+  do
+    fastqc -o fastqc $filename # <2>
+  done
+```
+
+1. Here we define a variable `filename` that will subsequently get the values of all datasets matching the `/datasets/*.fq.gz` statement, where `*` acts as a wildcard.
+2. Here we add the actual command, where `$filename` will subsequently be filled in with all of our four filenames.
+
+
+
+## Trimming: `trimmomatic`
+
+## Mapping: `STAR`
+
+### Inspecting the mapping on a genome browser
+
+## Counting: `featureCounts`
+
+## A note on the specific tools used here
+
+As in many things in programming: there are many ways to reach the same goal. Here we have selected mapping, trimming and counting tools that we have available and have experience with, but there are many others that perform just as well. The following table highlights a few popular alternative options:
+
+| Task | Tool used here | Alternative tools |
+| ---- | -------------- | ----------------- |
+| Trimming | `Trimmomatic` | `cutadapt`, `fastp` |
+| Mapping | `STAR` | `HISAT2` |
+| Counting | `featureCounts` | `StringTie` |

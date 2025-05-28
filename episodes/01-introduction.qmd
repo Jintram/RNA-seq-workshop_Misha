@@ -1,0 +1,30 @@
+---
+title: "Introduction"
+---
+
+## Welcome!
+
+Welcome to the RNA-seq workshop of the bioDSC. This workshop will introduce you to the basics of gene expression analysis using RNA-Seq. It is going to be fun and empowering! You will discover how the total RNA pool of an organism is converted to short sequences called “reads” that can in turn be used to get insights into gene expression. Through careful experimental design, this gene expression information can answer research questions and offer biological insights.
+
+The workshop consists of two core parts: 
+
+1. **Bioinformatics:** Quality control of the reads, mapping reads to a reference genome, and count the number of reads per gene. This will give us a count table!
+2. **Differential gene expression:** We will use DESeq2 to discover differentially expressed genes in certain conditions. DESeq2 will use your count table as input.
+
+The materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own speed. Regardless of how you go through the materials, we hope that you will learn something useful!
+
+## Learning objectives
+
+After this workshop, you should be able to:
+
+- Identify good practices when designing a RNA-Seq experiment
+- Assess the quality of RNA-seq sequencing data (“reads”) using the command-line instructions
+- Align RNA-seq reads to a reference genome using a splice-aware aligner (e.g. STAR).
+- Generate a count matrix from the RNA-seq data alignment
+- Perform a QC of your experiment through Principal Component Analysis (PCA) and sample clustering.
+- Execute a differential gene expression analysis using R and the DESeq2 package.
+- Be able to create key plots: volcano plot, heatmap and clustering of differentially expressed genes.
+
+## Schedule
+
+insert table here

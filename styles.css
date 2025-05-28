@@ -1,0 +1,18 @@
+/* Change font size across whole website */
+:root {
+  font-size: 18px;  
+}
+
+/* Change font of all paragraph text */
+body {
+  font-size: 0.85em;
+}
+
+.sidebar-header img {
+  max-height: 65px;  /* Adjust size as needed */
+  width: auto;
+}
+
+.sidebar .sidebar-title {
+  color: white !important;
+}

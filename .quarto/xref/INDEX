@@ -1,0 +1,20 @@
+{
+  "episodes/04-differential-gene-expression.qmd": {
+    "04-differential-gene-expression.html": "a2b4ae03"
+  },
+  "episodes/02-experimental-considerations.qmd": {
+    "02-experimental-considerations.html": "3ee7ad66"
+  },
+  "episodes/03-mapping-reads.qmd": {
+    "03-mapping-reads.html": "cd06610c"
+  },
+  "episodes/01-introduction.qmd": {
+    "01-introduction.html": "2ea99a05"
+  },
+  "index.qmd": {
+    "index.html": "b5c1a9c6"
+  },
+  "about.qmd": {
+    "about.html": "3562a92f"
+  }
+}

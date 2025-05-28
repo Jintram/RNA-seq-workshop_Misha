@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  site-url: episodes/00-introduction.qmd
+  site-url: index.qmd
   favicon: "images/bioDSC-without-dots-transparent.png"
   page-navigation: true
   sidebar:

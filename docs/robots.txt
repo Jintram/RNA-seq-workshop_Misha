@@ -1,1 +1,1 @@
-Sitemap: episodes/00-introduction.qmd/sitemap.xml
+Sitemap: index.qmd/sitemap.xml

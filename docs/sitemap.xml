@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>episodes/00-introduction.qmd/index.html</loc>
-    <lastmod>2025-05-28T15:27:10.294Z</lastmod>
+    <loc>index.qmd/index.html</loc>
+    <lastmod>2025-05-28T15:33:16.028Z</lastmod>
   </url>
   <url>
-    <loc>episodes/00-introduction.qmd/episodes/03-mapping-reads.html</loc>
+    <loc>index.qmd/episodes/03-mapping-reads.html</loc>
     <lastmod>2025-05-28T14:40:23.753Z</lastmod>
   </url>
   <url>
-    <loc>episodes/00-introduction.qmd/episodes/04-differential-gene-expression.html</loc>
+    <loc>index.qmd/episodes/04-differential-gene-expression.html</loc>
     <lastmod>2025-05-27T13:40:54.654Z</lastmod>
   </url>
   <url>
-    <loc>episodes/00-introduction.qmd/episodes/02-experimental-considerations.html</loc>
+    <loc>index.qmd/episodes/02-experimental-considerations.html</loc>
     <lastmod>2025-05-28T14:18:37.221Z</lastmod>
   </url>
   <url>
-    <loc>episodes/00-introduction.qmd/episodes/01-setup.html</loc>
+    <loc>index.qmd/episodes/01-setup.html</loc>
     <lastmod>2025-05-28T15:14:11.927Z</lastmod>
   </url>
 </urlset>

@@ -8,6 +8,7 @@ website:
   page-navigation: true
   sidebar:
     search: false
+    id: main
     logo: "/images/bioDSC-without-dots-transparent.png"
     title: bioDSC RNA-seq
     style: "docked"

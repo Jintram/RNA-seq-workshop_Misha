@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>From fastq files to alignments</title>
+<title>Setting up</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../episodes/04-differential-gene-expression.html" rel="next">
-<link href="../episodes/02-experimental-considerations.html" rel="prev">
+<link href="../episodes/02-experimental-considerations.html" rel="next">
+<link href="../episodes/00-introduction.html" rel="prev">
 <link href="../images/bioDSC-without-dots-transparent.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../episodes/03-mapping-reads.html">From fastq files to alignments</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../episodes/01-setup.html">Setting up</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -139,7 +105,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../episodes/01-setup.html" class="sidebar-item-text sidebar-link">
+  <a href="../episodes/00-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../episodes/01-setup.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Setting up</span></a>
   </div>
 </li>
@@ -151,7 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../episodes/03-mapping-reads.html" class="sidebar-item-text sidebar-link active">
+  <a href="../episodes/03-mapping-reads.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">From fastq files to alignments</span></a>
   </div>
 </li>
@@ -166,28 +138,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#quality-control-fastqc" id="toc-quality-control-fastqc" class="nav-link active" data-scroll-target="#quality-control-fastqc">Quality control: <code>fastqc</code></a></li>
-  <li><a href="#trimming-trimmomatic" id="toc-trimming-trimmomatic" class="nav-link" data-scroll-target="#trimming-trimmomatic">Trimming: <code>trimmomatic</code></a></li>
-  <li><a href="#mapping-star" id="toc-mapping-star" class="nav-link" data-scroll-target="#mapping-star">Mapping: <code>STAR</code></a>
-  <ul class="collapse">
-  <li><a href="#inspecting-the-mapping-on-a-genome-browser" id="toc-inspecting-the-mapping-on-a-genome-browser" class="nav-link" data-scroll-target="#inspecting-the-mapping-on-a-genome-browser">Inspecting the mapping on a genome browser</a></li>
-  </ul></li>
-  <li><a href="#counting-featurecounts" id="toc-counting-featurecounts" class="nav-link" data-scroll-target="#counting-featurecounts">Counting: <code>featureCounts</code></a></li>
-  <li><a href="#a-note-on-the-specific-tools-used-here" id="toc-a-note-on-the-specific-tools-used-here" class="nav-link" data-scroll-target="#a-note-on-the-specific-tools-used-here">A note on the specific tools used here</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">From fastq files to alignments</h1>
+<h1 class="title">Setting up</h1>
 </div>
 
 
@@ -204,118 +163,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The moment is there: you received the FASTQ files from your sequencing provider! Now what?</p>
-<section id="quality-control-fastqc" class="level2">
-<h2 class="anchored" data-anchor-id="quality-control-fastqc">Quality control: <code>fastqc</code></h2>
-<p>The first step in the RNA-seq workflow is to assess the quality of the sequencing reads. Sequence reads generated from next-generation sequencing technologies come in the FASTQ file format. This file format evolved from FASTA: it contains sequence data, but also contains quality information. For a single record (sequence read) there are four lines, each of which are described below:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Line</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Always begins with ‘@’ and then information about the read</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>The actual DNA sequence</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Always begins with a ‘+’ and sometimes the same info in line 1</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Has a string of characters which represent the quality scores; must have same number of characters as line 2</td>
-</tr>
-</tbody>
-</table>
-<p>Let’s run <code>fastqc</code> on one sample:</p>
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>bash</strong></pre>
-</div>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="at">-o</span> /workspace/fastqc /datasets/Arabidopsis_sample1.fq.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<p>Doing this manually for every sample would be quite tiring, especially when we would have many samples. Let’s write a <code>bash</code> for loop to take care of this for us:</p>
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>bash</strong></pre>
-</div>
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode bash code-annotation-code code-with-copy code-annotated"><code class="sourceCode bash"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span>  /datasets/<span class="pp">*</span>.fq.gz</span>
-<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">do</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">fastqc</span> <span class="at">-o</span> fastqc <span class="va">$filename</span></span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Here we define a variable <code>filename</code> that will subsequently get the values of all datasets matching the <code>/datasets/*.fq.gz</code> statement, where <code>*</code> acts as a wildcard.</span>
-</dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="2">Here we add the actual command, where <code>$filename</code> will subsequently be filled in with all of our four filenames.</span>
-</dd>
-</dl>
-</div>
-</div>
-</section>
-<section id="trimming-trimmomatic" class="level2">
-<h2 class="anchored" data-anchor-id="trimming-trimmomatic">Trimming: <code>trimmomatic</code></h2>
-</section>
-<section id="mapping-star" class="level2">
-<h2 class="anchored" data-anchor-id="mapping-star">Mapping: <code>STAR</code></h2>
-<section id="inspecting-the-mapping-on-a-genome-browser" class="level3">
-<h3 class="anchored" data-anchor-id="inspecting-the-mapping-on-a-genome-browser">Inspecting the mapping on a genome browser</h3>
-</section>
-</section>
-<section id="counting-featurecounts" class="level2">
-<h2 class="anchored" data-anchor-id="counting-featurecounts">Counting: <code>featureCounts</code></h2>
-</section>
-<section id="a-note-on-the-specific-tools-used-here" class="level2">
-<h2 class="anchored" data-anchor-id="a-note-on-the-specific-tools-used-here">A note on the specific tools used here</h2>
-<p>As in many things in programming: there are many ways to reach the same goal. Here we have selected mapping, trimming and counting tools that we have available and have experience with, but there are many others that perform just as well. The following table highlights a few popular alternative options:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Task</th>
-<th>Tool used here</th>
-<th>Alternative tools</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Trimming</td>
-<td><code>Trimmomatic</code></td>
-<td><code>cutadapt</code>, <code>fastp</code></td>
-</tr>
-<tr class="even">
-<td>Mapping</td>
-<td><code>STAR</code></td>
-<td><code>HISAT2</code></td>
-</tr>
-<tr class="odd">
-<td>Counting</td>
-<td><code>featureCounts</code></td>
-<td><code>StringTie</code></td>
-</tr>
-</tbody>
-</table>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -410,7 +259,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("index\.qmd");
+      var filterRegex = new RegExp("episodes\/00-introduction\.qmd");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -779,13 +628,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../episodes/02-experimental-considerations.html" class="pagination-link" aria-label="Before the experiment">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Before the experiment</span>
+      <a href="../episodes/00-introduction.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../episodes/04-differential-gene-expression.html" class="pagination-link" aria-label="Differential gene expression">
-        <span class="nav-page-text">Differential gene expression</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../episodes/02-experimental-considerations.html" class="pagination-link" aria-label="Before the experiment">
+        <span class="nav-page-text">Before the experiment</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

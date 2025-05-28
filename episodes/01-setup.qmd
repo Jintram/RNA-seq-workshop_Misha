@@ -1,0 +1,9 @@
+---
+title: "Setting up"
+engine: knitr
+format:
+    html:
+        fig-width: 5
+        fig-height: 4
+        code-annotations: hover
+---

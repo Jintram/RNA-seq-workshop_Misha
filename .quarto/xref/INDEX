@@ -16,5 +16,11 @@
   },
   "about.qmd": {
     "about.html": "3562a92f"
+  },
+  "episodes/01-setup.qmd": {
+    "01-setup.html": "e6dbecf0"
+  },
+  "episodes/00-introduction.qmd": {
+    "00-introduction.html": "9ac01b8c"
   }
 }

@@ -275,16 +275,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dl>
 </div>
 </div>
-</section>
-<section id="trimming-trimmomatic" class="level2">
-<h2 class="anchored" data-anchor-id="trimming-trimmomatic">Trimming: <code>trimmomatic</code></h2>
-<p>Often, <code>fastqc</code> reports will reveal that sequencing adapters are still present in your reads. This is known as ‘adapter contamination’, and the presence of these sequences in the reads might affect how the reads map to the genome of interest. So, we need to get rid of them. We will <code>trimmomatic</code> to do this.</p>
+<p><code>fastq</code> generates reports of each sample in <code>.html</code> format:</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add trimmomatic command here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ... <span class="co"># ls the results folder here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Let’s download one of them, and inspect the results:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download to local instructions here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><code>fastqc</code> gives the reads of each sample a score (Pass, Warning, or Fail) on several different modules and this is reported in the <strong>Summary</strong>. <strong>TODO add screenshot</strong>. The next section contains basic statistics like the number of reads, average sequence length, and the GC content. Generally it is a good idea to keep track of the total number of reads sequenced for each sample and to make sure the read length and %GC content is as expected. One of the most important analysis modules is the <strong>“Per base sequence quality”</strong> plot. This plot provides the distribution of quality scores at each position in the read across all reads. This plot can alert us to whether there were any problems occuring during sequencing and whether we might need to contact the sequencing facility. <strong>TODO add screenshot good/bad plot</strong>. Other modules are discussed in detail <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html">here</a>. Note that nearly all sequencing datasets will show yellow warnings or red fails: <code>fastqc</code> is quite conservative. Your experiment is not lost if you get warnings or fails, but it warrants additional inspection of the reads.</p>
+</section>
+<section id="trimming-trimmomatic" class="level2">
+<h2 class="anchored" data-anchor-id="trimming-trimmomatic">Trimming: <code>trimmomatic</code></h2>
+<p>A common anomaly detected by <code>fastqc</code> is sequencing adapters still being present some of the the reads (shown in <strong>Overrepresented sequences</strong> table). This is known as ‘adapter contamination’, and the presence of these adapter sequences in the reads might affect how the reads map to the genome of interest. So, we need to get rid of them. We will <code>trimmomatic</code> to do this. In addition, we can ask <code>trimmomatic</code> to trim low quality bases from the reads.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add trimmomatic command here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled" title="Exercise">
@@ -325,9 +344,10 @@ Solution
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="at">-o</span> /workspace/fastqc /datasets/Arabidopsis_sample1.trimmed.fq.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="at">-o</span> /workspace/fastqc /datasets/Arabidopsis_sample1.trimmed.fq.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<p>By inspecting the <code>.html</code> report of the trimmed reads, we see that that <strong>xyz</strong> warnings now show pass.</p>
 </div>
 </div>
 </div>
@@ -364,14 +384,13 @@ Solution
 </div>
 </div>
 </div>
-<p>To use an aligner, we must first get the <strong>reference genome</strong> and then <em>index</em> the reference genome. Indexing the genome prepares the genome in a way that allows a computer to search it efficiently. The genome, a multi-million basepair long string of text, is encoded into a different, computer-friendly datastructure such as a suffix tree. The details of this procedure are beyond the scope of this workshop, but it’s important to do it!</p>
-<p>Here, we download the <em>Arabidopsis thaliana</em> reference genome and index it:</p>
+<p>To use an aligner, we must first get the <strong>reference genome</strong> and then <em>index</em> the reference genome. Indexing the genome prepares the genome in a way that allows a computer to search it efficiently. The genome, a multi-million basepair long string of text, is encoded into a different, computer-friendly datastructure such as a suffix tree. The details of this procedure are beyond the scope of this workshop, but it’s important to do it. So, let’s go ahead and download the <em>Arabidopsis thaliana</em> reference genome, and index it:</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Index command here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Index command here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Allright, let’s finally run <code>STAR</code>:</p>
@@ -380,15 +399,117 @@ Solution
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run STAR here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run STAR here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<p>We can inspect a mapping summary in a file generated by STAR called <code>final.out</code>:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat final.out</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>It’s important to check how many reads did not map to the reference genome. A high proportion of unmapped reads can be a warning sign that something went wrong in your experiment or analysis. The explanations may be technical (bad read quality), bioinformatical (perhaps you used the wrong reference genome!), or biological — it has been well documented that around 11% of primate and rodent cell-line RNA-seq datasets available on NCBI in 2015 were contaminated with mycoplasma RNA (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4357728/">Olarerin-George &amp; Hogenesch, 2015</a>). Likewise, 8,5% of all <em>Arabidopsis thaliana</em> NCBI RNA-seq datasets are contaminated with a virus that does not cause any disease symptoms, but can cover up to 80% of all reads generated in an RNA-seq experiment (<a href="https://nph.onlinelibrary.wiley.com/doi/full/10.1111/nph.18466">Verhoeven et al., 2022</a>). That said, we don’t need to aim for 100% reads mapped to the reference genome. There will always be some contamination, or your studied individual possesses genetic information not present in the reference genome. <strong>TODO: add one (subset) of reads to demonstrate this, from the verhoeven paper</strong></p>
 <section id="bam-and-sam-files" class="level3">
 <h3 class="anchored" data-anchor-id="bam-and-sam-files">BAM and SAM files</h3>
-<p><em>TODO: explain BAM and SAM files here</em></p>
+<p>The mapped reads are stored in a <code>.bam</code> file by <code>STAR</code>. <code>.bam</code> and <code>.sam</code> files keep information for each individual read and its alignment to the genome. <code>.sam</code> files do this in a tab-seperated, human readable format, while <code>.bam</code> files store the same information in a binary file format that’s not readable for humans, but is much more efficient to process and store by computers. <code>samtools</code> is a widely used program to inspect and manipulate <code>.sam</code> and <code>.bam</code> files. Like many command line programs, <code>samtools</code> commands can be connected to each other via the pipe symbol <code>|</code>, and the results can be stored in a new file using the <code>&gt;</code> symbol.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> xyz.sam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>head</code> command to inspect a <code>.bam</code> file.</p>
+<ol type="1">
+<li>What do you see?</li>
+<li>Use <code>samtools view</code> command, piped into a common Unix program, to inspect the first 10 lines of the file.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> xyz.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The output looks like gibberish, because <code>.bam</code> files are a binary file format. You can use <code>samtools view</code> to make samtools read the binary file, and then pipe that result into the <code>head</code> function to show the first 10 lines: <code>samtools view xyz.bam | head</code></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the two following commands on a <code>.bam</code> file, and interpret the output.</p>
+<ol type="1">
+<li><code>samtools flagstat</code></li>
+<li><code>samtools idxstats</code> (Note: before running this command, you need to index the <code>.bam</code> file using <code>samtools index xyz.bam</code>)</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><code>samtools flagstat</code> shows us (just like the <code>STAR</code> log file) how many reads were mapped correctly. In addition, it tells us whether read pairs (if mapping paired-end data) mapped together as expected.</li>
+<li><code>samtools idxstats</code> shows us how many reads were mapped to each chromosome of the reference genome. Useful to detect whether the entire genome is evenly covered, or that there may be overrepresentation on e.g.&nbsp;the mitochondrial DNA.</li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="inspecting-the-mapping-on-a-genome-browser" class="level3">
 <h3 class="anchored" data-anchor-id="inspecting-the-mapping-on-a-genome-browser">Inspecting the mapping on a genome browser</h3>
+<ul>
+<li>download one bam + bai file and inspect mapping in genome browser</li>
+<li>observe: only (or at least majority) reads map in genes (if this is not the case, something is wrong! either gDNA contamination, or bad annotation) (idea: screenshot of weird mapping for a question/exercise).</li>
+<li>observe split reads across introns</li>
+<li>we can’t inspect all samples manually like this, so we will need to count reads, which we will do in the next section.</li>
+<li>although you could go and visualize your favorite gene later, of two samples with two treatments, to observe what differential expression may look like.</li>
+</ul>
 </section>
 </section>
 <section id="counting-featurecounts" class="level2">

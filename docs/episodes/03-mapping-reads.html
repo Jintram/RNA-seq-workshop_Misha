@@ -122,6 +122,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </a>
     </div>
   </nav>
+  <div id="quarto-announcement" data-announcement-id="0b437132d8f9d16ca3b2831620bc9d1a" class="alert alert-info hidden"><i class="bi bi-tools quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Under construction</strong> - this workshop is still being designed and assembled at the moment!</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
@@ -175,6 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#trimming-trimmomatic" id="toc-trimming-trimmomatic" class="nav-link" data-scroll-target="#trimming-trimmomatic">Trimming: <code>trimmomatic</code></a></li>
   <li><a href="#mapping-star" id="toc-mapping-star" class="nav-link" data-scroll-target="#mapping-star">Mapping: <code>STAR</code></a>
   <ul class="collapse">
+  <li><a href="#bam-and-sam-files" id="toc-bam-and-sam-files" class="nav-link" data-scroll-target="#bam-and-sam-files">BAM and SAM files</a></li>
   <li><a href="#inspecting-the-mapping-on-a-genome-browser" id="toc-inspecting-the-mapping-on-a-genome-browser" class="nav-link" data-scroll-target="#inspecting-the-mapping-on-a-genome-browser">Inspecting the mapping on a genome browser</a></li>
   </ul></li>
   <li><a href="#counting-featurecounts" id="toc-counting-featurecounts" class="nav-link" data-scroll-target="#counting-featurecounts">Counting: <code>featureCounts</code></a></li>
@@ -274,9 +278,115 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="trimming-trimmomatic" class="level2">
 <h2 class="anchored" data-anchor-id="trimming-trimmomatic">Trimming: <code>trimmomatic</code></h2>
+<p>Often, <code>fastqc</code> reports will reveal that sequencing adapters are still present in your reads. This is known as ‘adapter contamination’, and the presence of these sequences in the reads might affect how the reads map to the genome of interest. So, we need to get rid of them. We will <code>trimmomatic</code> to do this.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add trimmomatic command here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After running <code>trimmomatic</code>, the adapter contamination should be gone.</p>
+<ol type="1">
+<li>How could you check whether <code>trimmomatic</code> indeed did it’s job?</li>
+<li>Write a command to check this.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>We can run <code>fastqc</code> again, this time on the trimmed reads.</li>
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="at">-o</span> /workspace/fastqc /datasets/Arabidopsis_sample1.trimmed.fq.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="mapping-star" class="level2">
 <h2 class="anchored" data-anchor-id="mapping-star">Mapping: <code>STAR</code></h2>
+<p>Our reads are now ready for mapping. Mapping reads means figuring out where each read from the RNA-seq experiment originally came from within the genome. For RNA-seq experiments, it’s important to pick a <strong>splice-aware</strong> aligner, since a RNA-seq read can span an exon-intron-exon boundary <strong>(TODO: add a figure here to demonstrate this)</strong>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>So, for RNA-seq we need splice-aware aligners. Can you come up with an experiment that would not require a splice-aware aligner program?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In experiments where we don’t need to think about exon-intron boundaries. This is the case when the reads originate from genomic DNA, for example for whole genome sequencing experiments, or enrichment sequencing experiments like Chip-Seq.</p>
+</div>
+</div>
+</div>
+<p>To use an aligner, we must first get the <strong>reference genome</strong> and then <em>index</em> the reference genome. Indexing the genome prepares the genome in a way that allows a computer to search it efficiently. The genome, a multi-million basepair long string of text, is encoded into a different, computer-friendly datastructure such as a suffix tree. The details of this procedure are beyond the scope of this workshop, but it’s important to do it!</p>
+<p>Here, we download the <em>Arabidopsis thaliana</em> reference genome and index it:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Index command here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Allright, let’s finally run <code>STAR</code>:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run STAR here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<section id="bam-and-sam-files" class="level3">
+<h3 class="anchored" data-anchor-id="bam-and-sam-files">BAM and SAM files</h3>
+<p><em>TODO: explain BAM and SAM files here</em></p>
+</section>
 <section id="inspecting-the-mapping-on-a-genome-browser" class="level3">
 <h3 class="anchored" data-anchor-id="inspecting-the-mapping-on-a-genome-browser">Inspecting the mapping on a genome browser</h3>
 </section>

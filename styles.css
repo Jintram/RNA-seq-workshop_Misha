@@ -1,11 +1,6 @@
-/* Change font size across whole website */
-:root {
-  font-size: 18px;  
-}
-
 /* Change font of all paragraph text */
 body {
-  font-size: 0.85em;
+  font-size: 0.95em;
 }
 
 .sidebar-header img {

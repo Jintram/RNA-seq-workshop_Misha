@@ -122,6 +122,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </a>
     </div>
   </nav>
+  <div id="quarto-announcement" data-announcement-id="0b437132d8f9d16ca3b2831620bc9d1a" class="alert alert-info hidden"><i class="bi bi-tools quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Under construction</strong> - this workshop is still being designed and assembled at the moment!</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
@@ -208,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis testing</h2>
 <p>In an RNA-seq experiment, you will analyze the expression levels of thousands of genes. Before doing that, let us consider statistical tests and their associated p-values for a single gene. Say you are studying a plant gene called “heat stress trancripion factor A-2 (HSFA2)”, whose expression might be induced by…. heat stress (you might have guessed that). You could phrase your <em>null hypothesis</em>:</p>
 <blockquote class="blockquote">
-<p>“The average HSFA2 gene expression is <em>the same</em> in normal conditions than under heat stress in my Arabidopsis seedling”</p>
+<p>“The average HSFA2 gene expression is <em>the same</em> in normal conditions and under heat stress in my Arabidopsis seedlings”</p>
 </blockquote>
 <p>The corresponding <em>alternative hypothesis</em> could then be:</p>
 <blockquote class="blockquote">
@@ -279,19 +282,11 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> control<span class="sc">$</span>expression,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> heat_stress<span class="sc">$</span>expression,</span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"two.sided"</span> ,      </span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">FALSE</span>,             <span class="co"># important as the variance do not seem equal</span></span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> <span class="fl">0.95</span>)             <span class="co"># this corresponds to alpha = 0.05 </span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="1">lala;a</span>
-</dd>
-</dl>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> control<span class="sc">$</span>expression,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> heat_stress<span class="sc">$</span>expression,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"two.sided"</span> ,      </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">FALSE</span>,             <span class="co"># important as the variance do not seem equal</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> <span class="fl">0.95</span>)             <span class="co"># this corresponds to alpha = 0.05 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -307,10 +302,10 @@ mean of x mean of y
  1.970023  3.339883 </code></pre>
 </div>
 </div>
-<p>Because the <strong>p-value &lt; 0.05</strong>, we can reject our null hypothesis. So, we have discovered that <em>Arabidopsis</em> significantly upregulates the expression of HSF2A under heat stress. Sounds like it’s time to write this down and submit a manuscript to <em>Nature</em>!</p>
+<p>Because the <strong>p-value &lt; 0.05</strong>, we can safely reject our null hypothesis, and claim that we have discovered that <em>Arabidopsis</em> significantly upregulates the expression of HSF2A under heat stress. Sounds like it’s time to write this down and submit a manuscript to <em>Nature</em>!</p>
 <section id="statistical-power" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-power">Statistical power</h3>
-<p>Statistical power is the ability of your experiment to detect differences that actually exist (in gene expression, in this case). There are two main error one could make when testing hypotheses. Type I errors occur when the null hypothesis is rejected wrongly (i.e., you detect a significant difference while in reality there is no difference in gene expression). Type II errors also are common in hypothesis testing: they arise if you accept the null hypothesis when in fact a treatment effect exists.</p>
+<p>Statistical power is the ability of your experimental sample to detect differences (in this case, gene expression differences) that actually exist in the real population of your study species out there in the world. There are two main error one could make when testing hypotheses. Type I errors occur when the null hypothesis is rejected wrongly — you detect a significant difference while in reality there is no difference in gene expression (“false positive”). Type II errors also are common in hypothesis testing — they arise if you accept the null hypothesis when in fact a treatment effect exists (“false negative”)</p>
 <p>The power of an experiments is affected by several factors. We have seen so far:</p>
 <ul>
 <li><strong>The number of replicates</strong>: more samples results in a higher power</li>
@@ -322,7 +317,7 @@ mean of x mean of y
 </section>
 <section id="what-determines-the-power-of-an-rna-seq-experiment" class="level2">
 <h2 class="anchored" data-anchor-id="what-determines-the-power-of-an-rna-seq-experiment">What determines the power of an RNA-seq experiment?</h2>
-<p>RNA-seq experiments measure the expression levels of thousands of genes simultaneously, meaning we perform thousands of statistical tests at once. To avoid making too many false discoveries (type I errors), we correct for multiple testing. However, it also reduces statistical power – increasing the chance of missing real differences (type II errors). As a result, RNA-seq experiments can have lower power, especially for detecting small or subtle changes in gene expression.</p>
+<p>RNA-seq experiments measure the expression levels of thousands of genes simultaneously, meaning we perform thousands of statistical tests at once. To avoid making too many false discoveries (type I errors), we correct for multiple testing. However, it also reduces statistical power — increasing the chance of missing real differences (type II errors). As a result, RNA-seq experiments can have lower power, especially for detecting small or subtle changes in gene expression.</p>
 <p>So, how do we deal with that? We have a few parameters to play with when designing an RNA-seq experiment, including deciding the number of reads per sample, and the number of samples per treatment. <a href="https://academic.oup.com/bioinformatics/article/30/3/301/228651">Liu et al., 2014</a> investigated this systematically in an RNA-seq experiment with a human cell line. An exerpt from figure 1 is show below:</p>
 <p><img src="../images/02-de-replicates-2.png" class="img-fluid" style="width:5in"></p>
 <p><em>Image credits</em>: <a href="https://academic.oup.com/bioinformatics/article/30/3/301/228651">Liu et al., 2014</a></p>

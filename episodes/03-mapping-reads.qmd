@@ -41,11 +41,62 @@ for filename in  /datasets/*.fq.gz # <1>
 1. Here we define a variable `filename` that will subsequently get the values of all datasets matching the `/datasets/*.fq.gz` statement, where `*` acts as a wildcard.
 2. Here we add the actual command, where `$filename` will subsequently be filled in with all of our four filenames.
 
-
-
 ## Trimming: `trimmomatic`
 
+Often, `fastqc` reports will reveal that sequencing adapters are still present in your reads. This is known as 'adapter contamination', and the presence of these sequences in the reads might affect how the reads map to the genome of interest. So, we need to get rid of them. We will `trimmomatic` to do this. 
+
+```{bash filename="bash"}
+#| eval: false
+# add trimmomatic command here
+```
+
+::: {.callout-tip title="Exercise" icon="false"}
+After running `trimmomatic`, the adapter contamination should be gone.
+
+1. How could you check whether `trimmomatic` indeed did it's job?
+2. Write a command to check this.
+:::
+
+::: {.callout-caution title="Solution" collapse="true" icon="false"}
+1. We can run `fastqc` again, this time on the trimmed reads.
+2. 
+```{bash filename="bash"}
+#| eval: false
+fastqc -o /workspace/fastqc /datasets/Arabidopsis_sample1.trimmed.fq.gz
+```
+:::
+
 ## Mapping: `STAR`
+
+Our reads are now ready for mapping. Mapping reads means figuring out where each read from the RNA-seq experiment originally came from within the genome. For RNA-seq experiments, it's important to pick a **splice-aware** aligner, since a RNA-seq read can span an exon-intron-exon boundary **(TODO: add a figure here to demonstrate this)**.
+
+::: {.callout-tip title="Question" icon="false"}
+So, for RNA-seq we need splice-aware aligners. Can you come up with an experiment that would not require a splice-aware aligner program?
+:::
+
+::: {.callout-caution title="Solution" collapse="true" icon="false"}
+In experiments where we don't need to think about exon-intron boundaries. This is the case when the reads originate from genomic DNA, for example for whole genome sequencing experiments, or enrichment sequencing experiments like Chip-Seq. 
+:::
+
+To use an aligner, we must first get the **reference genome** and then *index* the reference genome. Indexing the genome prepares the genome in a way that allows a computer to search it efficiently. The genome, a multi-million basepair long string of text, is encoded into a different, computer-friendly datastructure such as a suffix tree. The details of this procedure are beyond the scope of this workshop, but it's important to do it!
+
+Here, we download the *Arabidopsis thaliana* reference genome and index it:
+
+```{bash filename="bash"}
+#| eval: false
+# Index command here
+```
+
+Allright, let's finally run `STAR`: 
+
+```{bash filename="bash"}
+#| eval: false
+# run STAR here
+```
+
+### BAM and SAM files
+
+*TODO: explain BAM and SAM files here*
 
 ### Inspecting the mapping on a genome browser
 

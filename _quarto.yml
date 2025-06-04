@@ -3,6 +3,12 @@ project:
   output-dir: docs
 
 website:
+  announcement: 
+    icon: tools
+    dismissable: true
+    content: "**Under construction** - this workshop is still being designed and assembled at the moment!"
+    type: info
+    position: below-navbar
   site-url: index.qmd
   favicon: "images/bioDSC-without-dots-transparent.png"
   page-navigation: true

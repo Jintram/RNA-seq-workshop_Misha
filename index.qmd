@@ -11,7 +11,7 @@ The workshop consists of two core parts:
 1. **Bioinformatics:** Quality control of the reads, mapping reads to a reference genome, and count the number of reads per gene. This will give us a count table!
 2. **Differential gene expression:** We will use DESeq2 to discover differentially expressed genes in certain conditions. DESeq2 will use your count table as input.
 
-The materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own speed. Regardless of how you go through the materials, we hope that you will learn something useful!
+The materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own pace. Regardless of how you go through the materials, we hope that you will learn something useful!
 
 ## Learning objectives
 
@@ -28,3 +28,11 @@ After this workshop, you should be able to:
 ## Schedule
 
 insert table here
+
+## Maintainers
+
+Current maintainers of this workshop page are members of the [bioDSC (University of Amsterdam)](https://www.biodsc.nl).
+
+## Credits
+
+This workshop is based on other teaching materials available online. The primary source is the [RNA-seq lesson designed by the Science Park Study Group](https://scienceparkstudygroup.github.io/rna-seq-lesson/), which in turn was based on [Harvard Chan Bioinformatics Core RNA-seq materials](https://hbctraining.github.io/Intro-to-bulk-RNAseq/schedule/links-to-lessons.html).

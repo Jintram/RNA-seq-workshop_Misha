@@ -1,5 +1,5 @@
 ---
-title: "Differential gene expression"
+title: "Differential gene expression analysis"
 format:
     html:
         fig-width: 8
@@ -21,6 +21,7 @@ set.seed(1992)
 
 library(DESeq2)
 library(tidyverse)
+library(ggrepel)
 ```
 
 ```{R filename = "R"}
@@ -146,11 +147,13 @@ df_weak_sep <- data.frame(
 
 p1 <- df_swap %>% ggplot(aes(x = PC1, y = PC2, colour = genotype)) + geom_point() +
   xlab("PC1 (48%)") +
-  ylab("PC2 (13%)")
+  ylab("PC2 (13%)") +
+  ggtitle("Sample swap")
 
 p2 <- df_weak_sep %>% ggplot(aes(x = PC1, y = PC2, colour = genotype)) + geom_point() +
     xlab("PC1 (12%)") +
-    ylab("PC2 (4%)") 
+    ylab("PC2 (4%)") +
+    ggtitle("Weak separation")
 
 p1 | p2
 ```
@@ -171,11 +174,13 @@ df_confounding_1 <- data.frame(
 
 p1 <- df_confounding_1 %>% ggplot(aes(x = PC1, y = PC2, colour = genotype)) + geom_point() +
   xlab("PC1 (48%)") +
-  ylab("PC2 (13%)") 
+  ylab("PC2 (13%)") +
+  ggtitle("Genotype effect ...")
 
 p2 <- df_confounding_1 %>% ggplot(aes(x = PC1, y = PC2, colour = gender)) + geom_point() +
   xlab("PC1 (48%)") +
-  ylab("PC2 (13%)") 
+  ylab("PC2 (13%)") +
+  ggtitle("... or gender effect?")
 
 p1 | p2
 ```
@@ -202,17 +207,62 @@ res <- results(dds, alpha = 0.05) # <1>
 DEGs <- res %>%    # <2>
   as.data.frame() %>% 
   rownames_to_column("genes") %>%
+  mutate(minus_log10_pvalue = -log10(padj)) %>% 
   arrange(padj) 
 
 head(DEGs) 
 
-write.csv(DEGs, 'DEGs_spaceflight_vs_ground.csv') # <3>
+write.csv(DEGs, 'DEGs_spaceflight_vs_ground.csv', quote = FALSE, row.names = FALSE) # <3>
 ```
 1. Generate results table
-2. Turn results table into a data frame, generate a `genes` column from the rownames, then sort by adjusted p-value
+2. Turn results table into a data frame, generate a `genes` column from the rownames, make a new column with `-log10` transformed p-values, then sort by adjusted p-value.
 3. Write to a file!
+
+**todo**: 
+
+- look at shinkage of fold changes
+- add piece on extra contrasts
+- explain log2 fold change
 
 ### Volcano plots
 
+One way to visualize DEG results is to display them in a Volcano plot. Such a plot shows a measure of effect size (log2 fold changes) versus a measure of significance. There are [tools available](https://goedhart.shinyapps.io/VolcaNoseR/) (developed by Joachim Goedhart, assistant professor at SILS) to help you make such a plot using the DEG list we just saved as a `.csv` file. Alternatively, we can make one ourselves for full control of the plot:
+
+```{R filename="R"}
+# Define fold change and p-value cutoffs
+lfc_cutoff <- 1.5
+padj_cutoff <- 0.05
+
+# Make new categorical variable containing significance information
+DEGs <- DEGs %>% 
+        mutate(significance = case_when(
+          padj < padj_cutoff & log2FoldChange > lfc_cutoff ~ 'Significantly upregulated',
+          padj < padj_cutoff & log2FoldChange < -lfc_cutoff ~ 'Significantly downregulated',
+          padj < padj_cutoff ~ 'Significant but small effect size',
+          TRUE ~ 'Not significant'
+        ))
+
+colors <- c("Significantly upregulated"="#E69F00", "Significantly downregulated"="#56B4E9", "Not significant"="gray80", "Significant but small effect size" = 'grey50')
+
+# select top 10 genes to highlight
+top_genes <- DEGs[1:10, ]
+
+volcano <- DEGs %>% 
+  ggplot(aes(x = log2FoldChange, y = -log10(padj), colour = significance)) +
+  geom_point(alpha = 0.5, size = 0.8) + 
+  geom_hline(aes(yintercept = -log10(padj_cutoff)), linetype = "dashed") +
+  geom_vline(aes(xintercept = lfc_cutoff), linetype = "dashed") +
+  geom_vline(aes(xintercept = -lfc_cutoff), linetype = "dashed") +
+  geom_point(data = top_genes, shape = 21,fill = NA, color = "black") +  # Highlight top10
+  geom_text_repel(data = top_genes, aes(label = genes), size = 2, min.segment.length = 0) +
+  scale_color_manual(values=colors) +
+  xlim(c(-10,10)) +
+  theme_bw() 
+
+ggsave("volcano_plot.png", volcano, width = 14, height = 8, units = "cm")
+volcano 
+```
+
 ### Heatmaps
 
+- This section should probably go to a new episode, together with GO term analysis.

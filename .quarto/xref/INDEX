@@ -22,5 +22,8 @@
   },
   "episodes/00-introduction.qmd": {
     "00-introduction.html": "9ac01b8c"
+  },
+  "episodes/05-pathway-enrichment.qmd": {
+    "05-pathway-enrichment.html": "f88564e3"
   }
 }

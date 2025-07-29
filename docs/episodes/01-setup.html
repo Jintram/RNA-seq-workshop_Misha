@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -120,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../episodes/03-mapping-reads.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From fastq files to alignments</span></a>
+ <span class="menu-text">From reads to alignments</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -140,8 +174,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#from-reads-to-alignments" id="toc-from-reads-to-alignments" class="nav-link active" data-scroll-target="#from-reads-to-alignments">From reads to alignments</a></li>
+  <li><a href="#differential-gene-expression-with-deseq2" id="toc-differential-gene-expression-with-deseq2" class="nav-link" data-scroll-target="#differential-gene-expression-with-deseq2">Differential gene expression with DESeq2</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -165,8 +206,52 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Any bioinformatics project requires setting up the required software.</p>
+<section id="from-reads-to-alignments" class="level2">
+<h2 class="anchored" data-anchor-id="from-reads-to-alignments">From reads to alignments</h2>
+<p>This part is the ‘hardcore’ bioinformatics part of this workshop. These steps are nearly always performed using <strong>command-line programs</strong>, which can be accessed via the Terminal (macOS, Linux) or WSL (Windows). For this workshop, we prepared a Google Colab environment where we will run the commands: <a href="https://github.com/maschon0/scPlants_practical0?tab=readme-ov-file">Find the google colab here</a> (<strong>TODO</strong>: this is a placeholder from a workshop i followed, i plan to make a similar one for our workshop.). Access to the Google Colab environment required a Google account.</p>
+<p>In reality, you will often have so many samples and reads that you will need access to a compute cluster with more compute power (CPUs), working memory (RAM), and storage space. At the University of Amsterdam, we use <a href="https://crunchomics-documentation.readthedocs.io/en/latest/">Crunchomics</a>. Crunchomics comes with many popular bioinformatics pre-installed, additional programs can be installed using <code>conda</code>.</p>
+</section>
+<section id="differential-gene-expression-with-deseq2" class="level2">
+<h2 class="anchored" data-anchor-id="differential-gene-expression-with-deseq2">Differential gene expression with DESeq2</h2>
+<p>For this part of the workshop, we will use <code>R</code>. Please make sure you have <code>R</code> and <code>RStudio</code> installed on your computer. In addition, you will need to install the following packages, via two different routes:</p>
+<p>Install the following packages via <code>install.packages()</code></p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'tidyverse'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'patchwork'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pheatmap"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Install the following packages via <code>Bioconductor</code></p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"apeglm"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"clusterProfiler"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"org.At.tair.db"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"DESeq2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Test whether <code>DESeq2</code> was installed properly by loading it:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DESeq2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>During the workshop, we will not have time to install the packages, or to troubleshoot installation problems. Please try to install the packages before the workshop. You can always contact the <a href="https://www.biodsc.nl/people.html">workshop organizers</a> if you run into problems.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

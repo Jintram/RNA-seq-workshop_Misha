@@ -7,3 +7,44 @@ format:
         fig-height: 4
         code-annotations: hover
 ---
+
+Any bioinformatics project requires setting up the required software. 
+
+## From reads to alignments
+
+This part is the 'hardcore' bioinformatics part of this workshop. These steps are nearly always performed using **command-line programs**, which can be accessed via the Terminal (macOS, Linux) or WSL (Windows). For this workshop, we prepared a Google Colab environment where we will run the commands: [Find the google colab here](https://github.com/maschon0/scPlants_practical0?tab=readme-ov-file) (**TODO**: this is a placeholder from a workshop i followed, i plan to make a similar one for our workshop.). Access to the Google Colab environment required a Google account. 
+
+In reality, you will often have so many samples and reads that you will need access to a compute cluster with more compute power (CPUs), working memory (RAM), and storage space. At the University of Amsterdam, we use [Crunchomics](https://crunchomics-documentation.readthedocs.io/en/latest/). Crunchomics comes with many popular bioinformatics pre-installed, additional programs can be installed using `conda`.
+
+## Differential gene expression with DESeq2
+
+For this part of the workshop, we will use `R`. Please make sure you have `R` and `RStudio` installed on your computer. In addition, you will need to install the following packages, via two different routes:
+
+Install the following packages via `install.packages()`
+
+```{R filename = "R"}
+#| eval: false 
+install.packages('tidyverse')
+install.packages('patchwork')
+install.packages("pheatmap")
+install.packages("BiocManager")
+```
+
+Install the following packages via `Bioconductor`
+
+```{R filename = "R"}
+#| eval: false 
+BiocManager::install("apeglm")
+BiocManager::install("clusterProfiler")
+BiocManager::install("org.At.tair.db")
+BiocManager::install("DESeq2")
+```
+
+Test whether `DESeq2` was installed properly by loading it:
+
+```{R filename = "R"}
+#| eval: false 
+library(DESeq2)
+```
+
+During the workshop, we will not have time to install the packages, or to troubleshoot installation problems. Please try to install the packages before the workshop. You can always contact the [workshop organizers](https://www.biodsc.nl/people.html) if you run into problems.

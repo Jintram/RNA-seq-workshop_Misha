@@ -1,5 +1,5 @@
 ---
-title: "From fastq files to alignments"
+title: "From reads to alignments"
 engine: knitr
 format:
     html:
@@ -159,6 +159,8 @@ Use the two following commands on a `.bam` file, and interpret the output.
 
 ### Inspecting the mapping on a genome browser
 
+**TODO**:
+
 - download one bam + bai file and inspect mapping in genome browser
 - observe: only (or at least majority) reads map in genes (if this is not the case, something is wrong! either gDNA contamination, or bad annotation) (idea: screenshot of weird mapping for a question/exercise).
 - observe split reads across introns
@@ -166,6 +168,8 @@ Use the two following commands on a `.bam` file, and interpret the output.
 - although you could go and visualize your favorite gene later, of two samples with two treatments, to observe what differential expression may look like.
 
 ## Counting: `featureCounts`
+
+**TODO**
 
 ## A note on the specific tools used here
 
@@ -176,3 +180,12 @@ As in many things in programming: there are many ways to reach the same goal. He
 | Trimming | `Trimmomatic` | `cutadapt`, `fastp` |
 | Mapping | `STAR` | `HISAT2` |
 | Counting | `featureCounts` | `StringTie` |
+
+## Streamlining read mapping procedure
+
+If you find this process quite cumbersome, then I have good news for you! There are *pipelines* available that streamline the chain of commands required for mapping:
+
+- [snakemake_rnaseq](https://github.com/BleekerLab/snakemake_rnaseq), developed at the Bleeker Lab (UvA).
+- [nf-core/rnaseq](https://nf-co.re/rnaseq/3.19.0), developed and maintained by the Nextflow community.
+
+A full instruction of these pipelines is beyond the scope of this workshop. Also, we wish to highlight that it is *very insightful* to have run all the steps by yourself rather than in a pipeline.

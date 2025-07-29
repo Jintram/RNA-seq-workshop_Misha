@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>From fastq files to alignments</title>
+<title>From reads to alignments</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../episodes/03-mapping-reads.html">From fastq files to alignments</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../episodes/03-mapping-reads.html">From reads to alignments</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../episodes/03-mapping-reads.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">From fastq files to alignments</span></a>
+ <span class="menu-text">From reads to alignments</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -189,6 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#counting-featurecounts" id="toc-counting-featurecounts" class="nav-link" data-scroll-target="#counting-featurecounts">Counting: <code>featureCounts</code></a></li>
   <li><a href="#a-note-on-the-specific-tools-used-here" id="toc-a-note-on-the-specific-tools-used-here" class="nav-link" data-scroll-target="#a-note-on-the-specific-tools-used-here">A note on the specific tools used here</a></li>
+  <li><a href="#streamlining-read-mapping-procedure" id="toc-streamlining-read-mapping-procedure" class="nav-link" data-scroll-target="#streamlining-read-mapping-procedure">Streamlining read mapping procedure</a></li>
   </ul>
 </nav>
     </div>
@@ -197,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">From fastq files to alignments</h1>
+<h1 class="title">From reads to alignments</h1>
 </div>
 
 
@@ -509,6 +510,7 @@ Solution
 </section>
 <section id="inspecting-the-mapping-on-a-genome-browser" class="level3">
 <h3 class="anchored" data-anchor-id="inspecting-the-mapping-on-a-genome-browser">Inspecting the mapping on a genome browser</h3>
+<p><strong>TODO</strong>:</p>
 <ul>
 <li>download one bam + bai file and inspect mapping in genome browser</li>
 <li>observe: only (or at least majority) reads map in genes (if this is not the case, something is wrong! either gDNA contamination, or bad annotation) (idea: screenshot of weird mapping for a question/exercise).</li>
@@ -520,6 +522,7 @@ Solution
 </section>
 <section id="counting-featurecounts" class="level2">
 <h2 class="anchored" data-anchor-id="counting-featurecounts">Counting: <code>featureCounts</code></h2>
+<p><strong>TODO</strong></p>
 </section>
 <section id="a-note-on-the-specific-tools-used-here" class="level2">
 <h2 class="anchored" data-anchor-id="a-note-on-the-specific-tools-used-here">A note on the specific tools used here</h2>
@@ -550,6 +553,15 @@ Solution
 </tr>
 </tbody>
 </table>
+</section>
+<section id="streamlining-read-mapping-procedure" class="level2">
+<h2 class="anchored" data-anchor-id="streamlining-read-mapping-procedure">Streamlining read mapping procedure</h2>
+<p>If you find this process quite cumbersome, then I have good news for you! There are <em>pipelines</em> available that streamline the chain of commands required for mapping:</p>
+<ul>
+<li><a href="https://github.com/BleekerLab/snakemake_rnaseq">snakemake_rnaseq</a>, developed at the Bleeker Lab (UvA).</li>
+<li><a href="https://nf-co.re/rnaseq/3.19.0">nf-core/rnaseq</a>, developed and maintained by the Nextflow community.</li>
+</ul>
+<p>A full instruction of these pipelines is beyond the scope of this workshop. Also, we wish to highlight that it is <em>very insightful</em> to have run all the steps by yourself rather than in a pipeline.</p>
 
 
 </section>

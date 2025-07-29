@@ -107,12 +107,17 @@ with_vst <- variance_stabilised_counts %>%
   ggtitle("Variance stabilized")
 
 without_vst | with_vst
+
+variance_stabilised_counts_df <- variance_stabilised_counts %>%
+  as.data.frame() %>% 
+  rownames_to_column("gene")  
+write.csv(variance_stabilised_counts_df, "../data_processed/variance_stabilized_dataset.csv", row.names=FALSE)
 ```
 Indeed, we can observe that genes that are highly expressed (have high mean count) also have a high standard deviation. This correlation is no longer there after stabilizing the variance.
 
 ### Performing the PCA
 
-Okay, finally we are ready to make our PCA. `DESeq2` makes this very easy for us with a simple function:
+Okay, finally we are ready to make our PCA. `DESeq2` makes this very easy for us with a simple function, `plotPCA()`, which directly gives us a PCA plot. 
 
 ```{R filename = "R"}
 plotPCA(variance_stabilized_dataset)
@@ -123,6 +128,13 @@ Let's break this plot down:
 - We see that principal component 1 (`PC1`) explains 60% of the variance, while `PC2` explains 29%. Those are nice scores. However, `PC1` does not seem to separate our two conditions. This means that there's another source of variation in this dataset that we are seemingly unaware of.
 - We see that `PC2` nicely separates our two conditions. This is good!  
 - We see that two samples from `space_flight` cluster very closely together, while one sample is quite a distant from those two. This means that this one replicate behaves a bit differently than the rest. However, since it's still similar to the other two samples on the `PC2` axis, this does not worry me.
+
+If you want to have full control and make the PCA plot yourself in `ggplot`, you can add `returnData=TRUE)`
+
+```{R filename = "R"}
+#| eval: false
+pca_data <- plotPCA(variance_stabilized_dataset, returnData=TRUE) 
+```
 
 While it is impossible to give examples of all situations that can occur in PCAs, we highlight a few below in fake PCA plots:
 
@@ -187,6 +199,28 @@ p1 | p2
 
 In this example, we see separation of our wildtype and mutant samples. Experiment succesful! ... or is it? Upon closer inpection, we can see that gender of our samples also separates our samples in the same way. It turns out that all wildtypes were male mice, and all mutants were female. We will therefore never know if differentially expressed genes are caused by the genotype, or simply by the gender of the mice: a clear case of confounding variable. This is an experimental design flaw, and should have been caught before sampling. Yet, it happens!
 
+::: {.callout-tip title="Question" icon="false"}
+Besides PCA, how else could you assess whether replicate samples from the same treatment show similar results?
+:::
+
+::: {.callout-caution title="Solution" collapse="true" icon="false"}
+We can use a correlation analysis to do this. For this analysis, we will also need the variance stabilized counts.
+
+```{R filename="R"}
+library(pheatmap)
+
+correlation_matrix <- cor(variance_stabilised_counts)
+
+metadata_2 <- metadata %>% column_to_rownames("sample_name")
+
+pheatmap(correlation_matrix, annotation_row = metadata_2, 
+         clustering_distance_rows = "correlation", 
+         clustering_distance_cols = "correlation", 
+         display_numbers = TRUE, fontsize = 7)
+```
+We can see that all the `ground_control` and `space_flight` samples cluster together. For example, `ground_control` samples have a 0.98 or greater correlation with each other, while they have a slightly lower correlation with `space_flight` samples. However, the samples still have a high correlation also accross the different treatment. This shows that the transcriptomes are actually highly similar, regardless of treatment, probably because the majority of genes is not differentially expressed. 
+:::
+
 ## Differential gene expression analysis
 
 `DESeq2` handles all steps of DEG analysis, from sample normalization to the statistical models and tests in one function. Easy! We run this function with the `dds` object as input, while storing the output in the `dds` object as well. In this way, we will 'fill' the `dds` object with the new analysis. `R` will now print all the individual steps that the `DESeq()` function performed for us. 
@@ -195,7 +229,10 @@ In this example, we see separation of our wildtype and mutant samples. Experimen
 dds <- DESeq(dds)
 ```
 
-**TODO: show plot of normalization effect**
+**TODO:** 
+
+- show plot of normalization effect
+- Write scaled counts to file
 
 ### Lists of DEGs
 
@@ -212,7 +249,7 @@ DEGs <- res %>%    # <2>
 
 head(DEGs) 
 
-write.csv(DEGs, 'DEGs_spaceflight_vs_ground.csv', quote = FALSE, row.names = FALSE) # <3>
+write.csv(DEGs, '../data_processed/all_genes_spaceflight_vs_ground.csv', quote = FALSE, row.names = FALSE) # <3>
 ```
 1. Generate results table
 2. Turn results table into a data frame, generate a `genes` column from the rownames, make a new column with `-log10` transformed p-values, then sort by adjusted p-value.
@@ -242,6 +279,9 @@ DEGs <- DEGs %>%
           TRUE ~ 'Not significant'
         ))
 
+DEGs_subset <- DEGs %>% filter(significance == "Significantly upregulated" | significance == "Significantly downregulated")
+write.csv(DEGs_subset, '../data_processed/DEGs_spaceflight_vs_ground.csv', quote = FALSE, row.names = FALSE)
+
 colors <- c("Significantly upregulated"="#E69F00", "Significantly downregulated"="#56B4E9", "Not significant"="gray80", "Significant but small effect size" = 'grey50')
 
 # select top 10 genes to highlight
@@ -262,6 +302,25 @@ volcano <- DEGs %>%
 ggsave("volcano_plot.png", volcano, width = 14, height = 8, units = "cm")
 volcano 
 ```
+We can plot the DESeq2-normalized counts of two genes, just to confirm whether the volcano plot is correct. We pick one that is highly upregulated in `space_flight`conditions (AT5G04120), and one that is strongly downregulated (AT1G62280). 
+
+```{R filename="R"}
+#| fig-width: 4
+#| fig-height: 2
+gene_1 <- plotCounts(dds, gene="AT5G04120", intgroup="condition", 
+                returnData=TRUE)
+
+gene_2 <- plotCounts(dds, gene="AT1G62280", intgroup="condition", 
+                        returnData=TRUE)
+
+gene_1 %>% ggplot(aes(x = condition, y = count, colour = condition)) +
+  geom_jitter(width = 0.05) +
+  theme_bw()
+gene_2 %>% ggplot(aes(x = condition, y = count, colour = condition)) +
+  geom_jitter(width = 0.05) +
+  theme_bw()
+```
+Yep, that seems about right.
 
 ### Heatmaps
 

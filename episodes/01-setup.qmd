@@ -50,3 +50,7 @@ library(DESeq2)
 ```
 
 During the workshop, we will **not** have time to install the packages, or to troubleshoot installation problems. Please try to install the packages before the workshop. You can always contact the [workshop organizers](https://www.biodsc.nl/people.html) if you run into problems.
+
+## Getting the data
+
+**TODO**: for the bioinformatics part, we will use the [following Zenodo archive](https://zenodo.org/records/6325891) 

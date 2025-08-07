@@ -170,6 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Enrichment analysis</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../episodes/06-practice-more.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practice on your own</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -215,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Before diving into the bioinformatics of RNA-seq experiments, it’s good to take a step back and think about experimental design and refresh your statistical knowledge. After all, an RNA-seq experiment is also an experiment like any other.</p>
 <section id="hypothesis-testing" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis testing</h2>
-<p>In an RNA-seq experiment, you will analyze the expression levels of thousands of genes. Before doing that, let us consider statistical tests and their associated p-values for a single gene. Say you are studying a plant gene called “heat stress trancripion factor A-2 (HSFA2)”, whose expression might be induced by…. heat stress (you might have guessed that). You could phrase your <em>null hypothesis</em>:</p>
+<p>In an RNA-seq experiment, you will analyze the expression levels of thousands of genes. Before doing that, let us consider statistical tests and their associated p-values for a single gene. Let’s say you are studying a plant gene called “heat stress trancripion factor A-2 (HSFA2)”, whose expression might be induced by…. heat stress (you might have guessed that). You could phrase your <em>null hypothesis</em>:</p>
 <blockquote class="blockquote">
 <p>“The average HSFA2 gene expression is <em>the same</em> in normal conditions and under heat stress in my Arabidopsis seedlings”</p>
 </blockquote>
@@ -223,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>“The average HSFA2 gene expression is different under heat stress compared to normal conditions in my Arabidopsis seedlings”</p>
 </blockquote>
-<p>You go into the greenhouse, sample 20 <em>Arabidopsis thaliana</em> plants in both control and heat stressed conditions, and measure the expression of HSF2A. Let’s visualize this in a boxplot made in <code>R</code>, using the <code>ggplot2</code> package.</p>
+<p>You set up an experiment in the greenhouse. You grow <em>Arabidopsis thaliana</em> seedlings, and give half of them a heat stress treatment. Then, you take samples of 20 plants in both control and heat stressed conditions, and measure the expression levels of HSF2A. Let’s visualize this in a boxplot made in <code>R</code>, using the <code>ggplot2</code> package.</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -252,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Indeed, HSF2A is highly expressed in heat stressed plants. The thick line of the boxplots show the <em>median</em> HSF2A expression in both groups. The median is a measure of central tendency. You will also see that the individual datapoints are dispersed around the boxplot: quantifying this gives us a measure of the <em>spread</em> of the data. An example of such a measure of spread is the <em>standard deviation</em>. It looks like our heat stressed plants display a more narrow spread of the data.</p>
+<p>Indeed, HSF2A is highly expressed in heat stressed plants. The thick line of the boxplots show the <em>median</em> HSF2A expression in both groups. The median is a measure of central tendency. You will also see that the individual datapoints are dispersed around the boxplot: quantifying this gives us a measure of the <em>spread</em> of the data. An example of such a measure of spread is the <em>standard deviation</em>. It looks like our heat stressed plants display a more narrow spread of the data, compared to the plants grown in the control condition.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -311,11 +317,11 @@ mean of x mean of y
 <p>Because the <strong>p-value &lt; 0.05</strong>, we can safely reject our null hypothesis, and claim that we have discovered that <em>Arabidopsis</em> significantly upregulates the expression of HSF2A under heat stress. Sounds like it’s time to write this down and submit a manuscript to <em>Nature</em>!</p>
 <section id="statistical-power" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-power">Statistical power</h3>
-<p>Statistical power is the ability of your experimental sample to detect differences (in this case, gene expression differences) that actually exist in the real population of your study species out there in the world. There are two main error one could make when testing hypotheses. Type I errors occur when the null hypothesis is rejected wrongly — you detect a significant difference while in reality there is no difference in gene expression (“false positive”). Type II errors also are common in hypothesis testing — they arise if you accept the null hypothesis when in fact a treatment effect exists (“false negative”)</p>
+<p>Statistical power is the ability of your experimental sample population to detect differences (in this case, gene expression differences) that actually exist in the real population of your study species out there in the world. There are two main error one could make when testing hypotheses. Type I errors occur when the null hypothesis is rejected wrongly — you detect a significant difference while in reality there is no difference in gene expression (“false positive”). Type II errors also are common in hypothesis testing — they arise if you accept the null hypothesis when in fact a treatment effect exists (“false negative”)</p>
 <p>The power of an experiments is affected by several factors. We have seen so far:</p>
 <ul>
 <li><strong>The number of replicates</strong>: more samples results in a higher power</li>
-<li><strong>Size of the effect</strong>: bigger changes are easier to detect</li>
+<li><strong>Size of the effect</strong>: bigger differences between groups are easier to detect</li>
 <li><strong>Variability of the data</strong>: less noise is more power</li>
 <li><strong>Confidence level threshold</strong>: usually, this is 0.05, but we can make our analysis more or less stringent by changing this to 0.01 or 0.1</li>
 </ul>
@@ -323,11 +329,11 @@ mean of x mean of y
 </section>
 <section id="what-determines-the-power-of-an-rna-seq-experiment" class="level2">
 <h2 class="anchored" data-anchor-id="what-determines-the-power-of-an-rna-seq-experiment">What determines the power of an RNA-seq experiment?</h2>
-<p>RNA-seq experiments measure the expression levels of thousands of genes simultaneously, meaning we perform thousands of statistical tests at once. To avoid making too many false discoveries (type I errors), we correct for multiple testing. However, it also reduces statistical power — increasing the chance of missing real differences (type II errors). As a result, RNA-seq experiments can have lower power, especially for detecting small or subtle changes in gene expression.</p>
+<p>RNA-seq experiments measure the expression levels of thousands of genes simultaneously, meaning we perform thousands of statistical tests at once. To avoid making too many false discoveries (type I errors), we have to correct for multiple testing. However, it also reduces statistical power — increasing the chance of missing real differences (type II errors). As a result, RNA-seq experiments can have lower power, especially for detecting small or subtle changes in gene expression.</p>
 <p>So, how do we deal with that? We have a few parameters to play with when designing an RNA-seq experiment, including deciding the number of reads per sample, and the number of samples per treatment. <a href="https://academic.oup.com/bioinformatics/article/30/3/301/228651">Liu et al., 2014</a> investigated this systematically in an RNA-seq experiment with a human cell line. An exerpt from figure 1 is show below:</p>
 <p><img src="../images/02-de-replicates-2.png" class="img-fluid" style="width:5in"></p>
 <p><em>Image credits</em>: <a href="https://academic.oup.com/bioinformatics/article/30/3/301/228651">Liu et al., 2014</a></p>
-<p>The figure shows the relationship between sequencing depth and number of replicates on the number of differentially expressed genes (DEGs) identified. It illustrates that <strong>biological replicates are of greater importance than sequencing depth</strong>. Above 10M-15M reads per sample, the number of DEGs increases marginally, while adding more biological replicates tends to return more DEGs. So, if your experiment is limited by a certain sequencing budget, it is almost always better to add more replicates than to sequence more reads of a limited number of samples. TODO: add potential caveats here?</p>
+<p>The figure shows the relationship between sequencing depth and number of replicates on the number of differentially expressed genes (DEGs) identified. It illustrates that <strong>biological replicates are of greater importance than sequencing depth</strong>. Above 10M-15M reads per sample, the number of DEGs increases marginally, while adding more biological replicates tends to return more DEGs. A similar conclusion was also reached by <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4878611/">Schurch et al., 2016</a>. So, if your experiment is limited by a certain sequencing budget, it is almost always better to add more replicates than to sequence more reads of a limited number of samples. However, there are some caveats here. Say you are interested in the transcriptome of a fungal pathogen growing in plant roots. In such samples, most reads will probably come from the plant roots, so you will need to sequence deeply (that is, many reads from the same sample) to find DEGs from the fungal pathogen.</p>
 </section>
 <section id="experimental-design" class="level2">
 <h2 class="anchored" data-anchor-id="experimental-design">Experimental design</h2>
@@ -336,7 +342,7 @@ mean of x mean of y
 <li><strong>Desirable</strong> because they are part of your experimental factors. For example, the genotype, treatment, or timepoint.</li>
 <li><strong>Undesirable</strong> because you are not interested in them. This could be: batch of RNA isolation, location of plants in the greenhouse, …</li>
 </ul>
-<p>Undesirable variation is unavaidable, but there are some practices to limit their impact. First of all, make sure that you don’t confound your experimental factors with undesirable sources of variation. For example, if you have too many samples to isolate RNA in one day of labwork, make sure you don’t isolate RNA from samples with genotype A on day 1, and genotype B on day 2. In this case, you will never be able to know whether genes were differentially expressed because the genotypes of the samples differ (very interesting!) or because RNA was isolated on two different days (not very interesting). Instead, mix your samples of genotype A and B over your two RNA isolation days. Still, you should always record known sources of undesirable variation so you can correct for it later. There’s much more to be said about this, for more details see <a href="https://hbctraining.github.io/Intro-to-rnaseq-fasrc-salmon-flipped/lessons/02_experimental_planning_considerations.html">these materials from Harvard Chan Bioinformatics Core</a></p>
+<p>Undesirable variation is unavaidable, but there are some practices to limit their impact. First of all, make sure that you don’t confound your experimental factors with undesirable sources of variation by properly randomizing your treatments. For example, if you have too many samples to isolate RNA in one day of labwork, make sure you don’t isolate RNA from samples with genotype A on day 1, and genotype B on day 2. In this case, you will never be able to know whether genes were differentially expressed because the genotypes of the samples differ (very interesting!) or because RNA was isolated on two different days (not very interesting). Instead, mix your samples of genotype A and B over your two RNA isolation days. Still, you should always record known sources of undesirable variation so you can correct for it later. There’s much more to be said about this, for more details see <a href="https://hbctraining.github.io/Intro-to-rnaseq-fasrc-salmon-flipped/lessons/02_experimental_planning_considerations.html">these materials from Harvard Chan Bioinformatics Core</a>.</p>
 </section>
 <section id="concluding-remarks" class="level2">
 <h2 class="anchored" data-anchor-id="concluding-remarks">Concluding remarks</h2>

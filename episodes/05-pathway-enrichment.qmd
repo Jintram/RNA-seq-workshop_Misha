@@ -9,11 +9,7 @@ format:
 
 ## Clustering and heatmaps
 
-**TODO**:
-
-- Add code for heatmaps of gene expression in different samples. Only show top n differential genes.
-- Should we transform the (scaled) counts to Z score here?
-- Also add clustering here, then extract gene lists per cluster
+**TODO**: add some text to describe the heatmap 
 
 Read the processed data into memory:
 
@@ -34,7 +30,7 @@ vsc_selection <- variance_stabilised_counts %>%
 ```
 
 ```{R filename="R"}
-hm <- tidyheatmap(df = vsc_selection,
+heatmap <- tidyheatmap(df = vsc_selection,
             rows = gene,
             columns = sample,
             values = vst_counts,
@@ -49,14 +45,15 @@ hm <- tidyheatmap(df = vsc_selection,
             # filename = "heatmap.pdf"
 )
 
-hm
+heatmap
 ```
 
 ## Enrichment analysis of gene lists
 
 We want to assign some sort of funtion or pathway to a cluster / list of genes. To do this we can use GO term enrichment.
 
-**options**:
+**TODO**:
 
-- Do this in a webserver e.g. [g:profiler](http://biit.cs.ut.ee/gprofiler/gost). Seems up to date and also looks like it contains many different organisms. 
-- Do this in code via clusterProfiler
+- Add description to do this in a webserver e.g. [g:profiler](http://biit.cs.ut.ee/gprofiler/gost). Seems up to date and also looks like it contains many different organisms. 
+- Add instructions to do this in code via `clusterProfiler`
+- The example dataset is from Arabidopsis but preferably the instructions and code should work for a wide range of organisms, such that the instructions are easily usable for anyone. 

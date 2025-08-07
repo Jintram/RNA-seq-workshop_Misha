@@ -1,0 +1,24 @@
+---
+title: "Practice on your own"
+format:
+    html:
+        fig-width: 8
+        fig-height: 4
+        code-annotations: hover
+---
+
+In this workshop, we went all the way from experimental design, to bioinformatic processing of `.fastq` files, to differential gene expression analysis in `DESeq2`. We hope that you are now ready to design and analyze your own transcriptome experiments. Remember that we only covered the very basics of transcriptome analysis, expect to learn a lot more when you start analyzing your own data.
+
+If you first want to practice more, or don't have your own data yet, consider analyzing publicly available RNA-seq datasets. Papers often make their raw sequencing reads available on NCBI or ENA, which you can download to reanalyze. For now, we collected three count tables to practice `DESeq2` analysis, from three different domains of the life sciences.
+
+### The neuroscientist
+
+**TODO** Find a neuroscience count table with associated metadata. Something brain development related? Maybe from the Frank Jacobs lab?
+
+### The microbiologist
+
+**TODO** Find a microbiology count table with associated metadata. Bacteria response to antibiotics? Bacteria during infection?
+
+### The plant scientist
+
+**TODO** Find a plant science count table with associated metadata. Tomato dataset from Petra Bleeker? Rice dataset from Harro Bouwmeester?

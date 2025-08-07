@@ -25,7 +25,7 @@ Let's run `fastqc` on one sample:
 
 ```{bash filename="bash"}
 #| eval: false
-fastqc -o /workspace/fastqc /datasets/Arabidopsis_sample1.fq.gz
+fastqc -o fastqc /datasets/Arabidopsis_sample1.fq.gz
 ```
 
 Doing this manually for every sample would be quite tiring, especially when we would have many samples. Let's write a `bash` for loop to take care of this for us:
@@ -45,17 +45,19 @@ for filename in  /datasets/*.fq.gz # <1>
 
 ```{bash filename="bash"}
 #| eval: false
-ls ... # ls the results folder here
+ls ... # TODO: add ls outcome here to show that we have 4 .html files now
 ```
 
 Let's download one of them, and inspect the results:
 
 ```{bash filename="bash"}
 #| eval: false
-# download to local instructions here
+# TODO: download to local instructions here (if you are working on a server)
 ```
 
-`fastqc` gives the reads of each sample a score (Pass, Warning, or Fail) on several different modules and this is reported in the **Summary**. **TODO add screenshot**. The next section contains basic statistics like the number of reads, average sequence length, and the GC content. Generally it is a good idea to keep track of the total number of reads sequenced for each sample and to make sure the read length and %GC content is as expected. One of the most important analysis modules is the **“Per base sequence quality”** plot. This plot provides the distribution of quality scores at each position in the read across all reads. This plot can alert us to whether there were any problems occuring during sequencing and whether we might need to contact the sequencing facility. **TODO add screenshot good/bad plot**. Other modules are discussed in detail [here](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html). Note that nearly all sequencing datasets will show yellow warnings or red fails: `fastqc` is quite conservative. Your experiment is not lost if you get warnings or fails, but it warrants additional inspection of the reads.
+`fastqc` gives the reads of each sample a score (Pass, Warning, or Fail) on several different modules and this is reported in the **Summary**. The next section contains basic statistics like the number of reads, average sequence length, and the GC content. Generally it is a good idea to keep track of the total number of reads sequenced for each sample and to make sure the read length and %GC content is as expected. One of the most important analysis modules is the **“Per base sequence quality”** plot. This plot provides the distribution of quality scores at each position in the read across all reads. This plot can alert us to whether there were any problems occuring during sequencing and whether we might need to contact the sequencing facility.  Other modules are discussed in detail [here](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html). Note that nearly all sequencing datasets will show yellow warnings or red fails: `fastqc` is quite conservative. Your experiment is not lost if you get warnings or fails, but it warrants additional inspection of the reads.
+
+**TODO: add screenshots of good/bad fastqc results**
 
 ## Trimming: `trimmomatic`
 
@@ -63,7 +65,7 @@ A common anomaly detected by `fastqc` is sequencing adapters still being present
 
 ```{bash filename="bash"}
 #| eval: false
-# add trimmomatic command here
+# TODO: add trimmomatic command here
 ```
 
 ::: {.callout-tip title="Exercise" icon="false"}
@@ -80,13 +82,14 @@ After running `trimmomatic`, the adapter contamination should be gone.
 #| eval: false
 fastqc -o /workspace/fastqc /datasets/Arabidopsis_sample1.trimmed.fq.gz
 ```
-By inspecting the `.html` report of the trimmed reads, we see that that **xyz** warnings now show pass.
-
+By inspecting the `.html` report of the trimmed reads, we should see that the quality of the read sets has now improved.
 :::
 
 ## Mapping: `STAR`
 
-Our reads are now ready for mapping. Mapping reads means figuring out where each read from the RNA-seq experiment originally came from within the genome. For RNA-seq experiments, it's important to pick a **splice-aware** aligner, since a RNA-seq read can span an exon-intron-exon boundary **(TODO: add a figure here to demonstrate this)**.
+Our reads are now ready for mapping. Mapping reads means figuring out where each read from the RNA-seq experiment originally came from within the genome. For RNA-seq experiments, it's important to pick a **splice-aware** aligner, since a RNA-seq read can span an exon-intron-exon boundary 
+
+**TODO: add a figure here to demonstrate this, like the one found [here](https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html)**.
 
 ::: {.callout-tip title="Question" icon="false"}
 So, for RNA-seq we need splice-aware aligners. Can you come up with an experiment that would not require a splice-aware aligner program?
@@ -100,24 +103,27 @@ To use an aligner, we must first get the **reference genome** and then *index* t
 
 ```{bash filename="bash"}
 #| eval: false
-# Index command here
+# TODO: Add download command here (via wget), OR already have the genome in the github repo
+# TODO: Add STAR index command here
 ```
 
 Allright, let's finally run `STAR`: 
 
 ```{bash filename="bash"}
 #| eval: false
-# run STAR here
+# TODO: Add STAR command here
 ```
 
 We can inspect a mapping summary in a file generated by STAR called `final.out`:
 
 ```{bash filename="bash"}
 #| eval: false
-# cat final.out
+# TODO: Add cat final.out output
 ```
 
-It's important to check how many reads did not map to the reference genome. A high proportion of unmapped reads can be a warning sign that something went wrong in your experiment or analysis. The explanations may be technical (bad read quality), bioinformatical (perhaps you used the wrong reference genome!), or biological --- it has been well documented that around 11% of primate and rodent cell-line RNA-seq datasets available on NCBI in 2015 were contaminated with mycoplasma RNA ([Olarerin-George & Hogenesch, 2015](https://pmc.ncbi.nlm.nih.gov/articles/PMC4357728/)). Likewise, 8,5% of all *Arabidopsis thaliana* NCBI RNA-seq datasets are contaminated with a virus that does not cause any disease symptoms, but can cover up to 80% of all reads generated in an RNA-seq experiment ([Verhoeven et al., 2022](https://nph.onlinelibrary.wiley.com/doi/full/10.1111/nph.18466)). That said, we don't need to aim for 100% reads mapped to the reference genome. There will always be some contamination, or your studied individual possesses genetic information not present in the reference genome. **TODO: add one (subset) of reads to demonstrate this, from the verhoeven paper**
+It's important to check how many reads did not map to the reference genome. A high proportion of unmapped reads can be a warning sign that something went wrong in your experiment or analysis. The explanations may be technical (bad read quality), bioinformatical (perhaps you used the wrong reference genome!), or biological --- it has been well documented that around 11% of primate and rodent cell-line RNA-seq datasets available on NCBI in 2015 were contaminated with mycoplasma RNA ([Olarerin-George & Hogenesch, 2015](https://pmc.ncbi.nlm.nih.gov/articles/PMC4357728/)). Likewise, 8,5% of all *Arabidopsis thaliana* NCBI RNA-seq datasets are contaminated with a virus that does not cause any disease symptoms, but can cover up to 80% of all reads generated in an RNA-seq experiment ([Verhoeven et al., 2022](https://nph.onlinelibrary.wiley.com/doi/full/10.1111/nph.18466)). That said, we don't need to aim for 100% reads mapped to the reference genome. There will always be some contamination, or your studied individual possesses genetic information not present in the reference genome. 
+
+**TODO: (Maybe as an additional exercise?) Add one subsetted dataset to demonstrate this, from the verhoeven paper.**
 
 ### BAM and SAM files
 
@@ -125,23 +131,28 @@ The mapped reads are stored in a `.bam` file by `STAR`. `.bam` and `.sam` files 
 
 ```{bash filename="bash"}
 #| eval: false
-head xyz.sam
+head xyz.sam # TODO: add correct filename here
 ```
 
 ::: {.callout-tip title="Exercise" icon="false"}
 Use the `head` command to inspect a `.bam` file. 
 
 1. What do you see?
-2. Use `samtools view` command, piped into a common Unix program, to inspect the first 10 lines of the file. 
+2. Use `samtools view` command, piped (using `|`) into a common Unix program, to inspect the first 10 lines of the file. 
 :::
 
 ::: {.callout-caution title="Solution" collapse="true" icon="false"}
 ```{bash filename="bash"}
 #| eval: false
-head xyz.bam
+head xyz.bam # TODO: add correct filename here
 ```
 
-The output looks like gibberish, because `.bam` files are a binary file format. You can use `samtools view` to make samtools read the binary file, and then pipe that result into the `head` function to show the first 10 lines: `samtools view xyz.bam | head`
+The output looks like gibberish, because `.bam` files are a binary file format. You can use `samtools view` to make samtools read the binary file, and then pipe that result into the `head` function to show the first 10 lines:
+
+```{bash filename="bash"}
+#| eval: false
+samtools view xyz.bam | head # TODO: add correct filename here
+```
 :::
 
 ::: {.callout-tip title="Exercise" icon="false"}
@@ -154,7 +165,22 @@ Use the two following commands on a `.bam` file, and interpret the output.
 ::: {.callout-caution title="Solution" collapse="true" icon="false"}
 
 1. `samtools flagstat` shows us (just like the `STAR` log file) how many reads were mapped correctly. In addition, it tells us whether read pairs (if mapping paired-end data) mapped together as expected.
-2. `samtools idxstats` shows us how many reads were mapped to each chromosome of the reference genome. Useful to detect whether the entire genome is evenly covered, or that there may be overrepresentation on e.g. the mitochondrial DNA.
+2. `samtools idxstats` shows us how many reads were mapped to each chromosome of the reference genome. This is useful to confirm whether the entire genome is evenly covered, or that there may be overrepresentation on e.g. the mitochondrial DNA.
+:::
+
+::: {.callout-tip title="Exercise" icon="false"}
+So far, we only trimmed and mapped one sample. Write a `bash` for loop to process all four samples.
+:::
+
+::: {.callout-caution title="Solution" collapse="true" icon="false"}
+```{bash filename="bash"}
+#| eval: false
+for filename in  /datasets/*.fq.gz 
+  do
+    # TODO: add trimmomatic command
+    # TODO: add STAR command
+  done
+```
 :::
 
 ### Inspecting the mapping on a genome browser
@@ -162,18 +188,21 @@ Use the two following commands on a `.bam` file, and interpret the output.
 **TODO**:
 
 - download one bam + bai file and inspect mapping in genome browser
-- observe: only (or at least majority) reads map in genes (if this is not the case, something is wrong! either gDNA contamination, or bad annotation) (idea: screenshot of weird mapping for a question/exercise).
+- observe: only (or at least majority) reads map in genes (if this is not the case, something is wrong! either gDNA contamination, or bad annotation) 
 - observe split reads across introns
 - we can't inspect all samples manually like this, so we will need to count reads, which we will do in the next section.
-- although you could go and visualize your favorite gene later, of two samples with two treatments, to observe what differential expression may look like.
+
 
 ## Counting: `featureCounts`
 
-**TODO**
+```{bash filename="bash"}
+#| eval: false
+# TODO: add featureCounts command here
+```
 
 ## A note on the specific tools used here
 
-As in many things in programming: there are many ways to reach the same goal. Here we have selected mapping, trimming and counting tools that we have available and have experience with, but there are many others that perform just as well. The following table highlights a few popular alternative options:
+In bioinformatics, there are often many ways to reach the same goal. Here we have selected mapping, trimming and counting tools that we have available and have experience with, but there are many others that perform just as well. The following table highlights a few popular alternative options:
 
 | Task | Tool used here | Alternative tools |
 | ---- | -------------- | ----------------- |

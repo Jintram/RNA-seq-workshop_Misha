@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../episodes/06-practice-more.html" rel="next">
 <link href="../episodes/04-differential-gene-expression.html" rel="prev">
 <link href="../images/bioDSC-without-dots-transparent.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -169,6 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Enrichment analysis</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../episodes/06-practice-more.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practice on your own</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -208,12 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="clustering-and-heatmaps" class="level2">
 <h2 class="anchored" data-anchor-id="clustering-and-heatmaps">Clustering and heatmaps</h2>
-<p><strong>TODO</strong>:</p>
-<ul>
-<li>Add code for heatmaps of gene expression in different samples. Only show top n differential genes.</li>
-<li>Should we transform the (scaled) counts to Z score here?</li>
-<li>Also add clustering here, then extract gene lists per cluster</li>
-</ul>
+<p><strong>TODO</strong>: add some text to describe the heatmap</p>
 <p>Read the processed data into memory:</p>
 <div class="cell">
 <div class="code-with-filename">
@@ -252,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hm <span class="ot">&lt;-</span> <span class="fu">tidyheatmap</span>(<span class="at">df =</span> vsc_selection,</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="ot">&lt;-</span> <span class="fu">tidyheatmap</span>(<span class="at">df =</span> vsc_selection,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">rows =</span> gene,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">columns =</span> sample,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">values =</span> vst_counts,</span>
@@ -267,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># filename = "heatmap.pdf"</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>hm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>heatmap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div>
@@ -281,10 +283,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="enrichment-analysis-of-gene-lists" class="level2">
 <h2 class="anchored" data-anchor-id="enrichment-analysis-of-gene-lists">Enrichment analysis of gene lists</h2>
 <p>We want to assign some sort of funtion or pathway to a cluster / list of genes. To do this we can use GO term enrichment.</p>
-<p><strong>options</strong>:</p>
+<p><strong>TODO</strong>:</p>
 <ul>
-<li>Do this in a webserver e.g.&nbsp;<a href="http://biit.cs.ut.ee/gprofiler/gost">g:profiler</a>. Seems up to date and also looks like it contains many different organisms.</li>
-<li>Do this in code via clusterProfiler</li>
+<li>Add description to do this in a webserver e.g.&nbsp;<a href="http://biit.cs.ut.ee/gprofiler/gost">g:profiler</a>. Seems up to date and also looks like it contains many different organisms.</li>
+<li>Add instructions to do this in code via <code>clusterProfiler</code></li>
+<li>The example dataset is from Arabidopsis but preferably the instructions and code should work for a wide range of organisms, such that the instructions are easily usable for anyone.</li>
 </ul>
 
 
@@ -757,6 +760,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../episodes/06-practice-more.html" class="pagination-link" aria-label="Practice on your own">
+        <span class="nav-page-text">Practice on your own</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

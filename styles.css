@@ -1,0 +1,28 @@
+/* Change font of all paragraph text */
+body {
+  font-size: 0.95em;
+}
+
+.sidebar-header img {
+  max-height: 65px;  /* Adjust size as needed */
+  width: auto;
+}
+
+.sidebar .sidebar-title {
+  color: white !important;
+}
+
+/* How to use:  <span class="mwadd">test 123</span>. */
+.mwadd {
+  background-color :#F6BC65;
+  padding: 0 0.2em;
+}
+
+/* Usage: <mwadd>my comment</mwadd> */
+mwadd {
+  background-color: #F6BC65; /* yellow highlight */
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-style: italic;
+  display: inline;
+}

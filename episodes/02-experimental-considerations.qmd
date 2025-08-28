@@ -7,9 +7,59 @@ format:
         code-annotations: hover
 ---
 
+::: {.mwadd}
+
+(MW)
+
+### Feedback    
+    
+The tutorial is now quite text heavy, I think it could benefit from adding more
+diagrams, highlight boxes, lists etc that emphasize take home messages and learning goals,
+and which clearify the logical structure of the material.
+    
+I would make some edits in topics and structure, see suggested structure below and other comments.    
+    
+I also wonder how to best convey this material to participants.
+Perhaps an idea is to create some small dataset (I already have some
+code to create simulated data based on a toy model, see [[1]](https://github.com/Jintram/2025-08_RNA-seq-basics/blob/main/simulated_data.R) and [[2]](https://github.com/Jintram/2025-08_RNA-seq-basics/blob/main/DESeq2_simulatedData.R), 
+could be used but not necessarily), and do a code-along session in Carpentries style using that example? 
+If smartly designed, this could highlight the main issues in a dataset.
+
+I think additionally it's a good idea to add some literature suggestions re. these topics.
+Some suggestions (some already included):
+
+- [Jeon2023](https://doi.org/10.3390/biom13020221), which discusses stat power for RNA-seq.
+    - Cites [Schurch2016](http://doi.org/10.1261/rna.053959.115)
+    - Cites [Wu2015](https://doi.org/10.1093/bioinformatics/btu640)
+- [Li2022](http://doi.org/10.1371/journal.pone.0264246), which evaluates several RNA-seq DEG analysis packages.
+    
+### Structure this episode should have imho:
+
+- Refresh basic stats to be able to discuss topics below (basic comparison w/ t-test)
+- Explain challenges related to RNA-seq experiments
+    - Multiple testing
+    - Having enough stat power to counter noise
+    - Pitfalls when designing experiments, e.g. 
+        - Too little samples
+        - Expecting to find "something" (hypothesis-driven vs. exploratory)
+        - False positives and difficult to intrepret results (related previous point)
+- Concrete tools and quantitative advice to aid in experimental design
+    - (Which adress above challenges.)    
+        
+:::
+
 Before diving into the bioinformatics of RNA-seq experiments, it's good to take a step back and think about experimental design and refresh your statistical knowledge. After all, an RNA-seq experiment is also an experiment like any other.
 
 ## Hypothesis testing
+
+::: {.mwadd}
+
+- This part explains basic statistics,  which most people hopefully know already, quite elaborately. Is it the idea people go over this fast?
+- Perhaps consider this knowledge that needs refreshing and point out some important nuances
+    - Technical: (like central tendency <-> mean, effect size)
+    - Raise important practical caveats, like multiple testing (make ppl understand this problem, and mention we address this later in DE analysis)  
+    
+:::
 
 In an RNA-seq experiment, you will analyze the expression levels of thousands of genes. Before doing that, let us consider statistical tests and their associated p-values for a single gene. Let's say you are studying a plant gene called "heat stress trancripion factor A-2 (HSFA2)", whose expression might be induced by.... heat stress (you might have guessed that). You could phrase your *null hypothesis*: 
 
@@ -63,11 +113,32 @@ t.test(x = control$expression,
 
 Because the **p-value < 0.05**, we can safely reject our null hypothesis, and claim that we have discovered that *Arabidopsis* significantly upregulates the expression of HSF2A under heat stress. Sounds like it's time to write this down and submit a manuscript to *Nature*!
 
+<mwadd>I don't agree with putting it the way as above. One of the big challenges of RNA-seq is handling multiple testing properly. In RNA-seq, I would not consider a raw p=±0.05 value indicative of anything.</mwadd>
+
 ### Statistical power
+
+::: {.mwadd}
+
+I think this section should offer some clear methods to estimate power, not only qualitative advice. I think we should include (somewhere in the material):
+
+- R's power testing function.
+    - Explain 'power.t.test()' to illustrate the idea.
+    - See e.g. [here](https://github.com/Jintram/2025-08_RNA-seq-basics/blob/main/power-testing.R)
+    - But this doesn't address the multiple testing issue.
+- Packages to estimate required sample size for RNA-seq specifically, that address the multiple testing issue.
+    - Maybe shouldn't discuss in detail, but point people towards this, and raise awareness.
+    - See e.g.:        
+        - [Wu2015](https://doi.org/10.1093/bioinformatics/btu640), with the [PROPER package](https://www.bioconductor.org/packages/devel/bioc/vignettes/PROPER/inst/doc/PROPER.pdf), that estimates required sample sizes to achieve stat power X.
+        - [Jeon2023](https://doi.org/10.3390/biom13020221)
+            - (I didn't deeply look into this, but this this is an important topic. Discuss further?)
+        
+:::
 
 Statistical power is the ability of your experimental sample population to detect differences (in this case, gene expression differences) that actually exist in the real population of your study species out there in the world. There are two main error one could make when testing hypotheses. Type I errors occur when the null hypothesis is rejected wrongly --- you detect a significant difference while in reality there is no difference in gene expression ("false positive"). Type II errors also are common in hypothesis testing --- they arise if you accept the null hypothesis when in fact a treatment effect exists ("false negative")
 
 The power of an experiments is affected by several factors. We have seen so far:
+
+<mwadd>I think an explanatory image with two distributions would be highly useful here.</mwadd>
 
 - **The number of replicates**: more samples results in a higher power
 - **Size of the effect**: bigger differences between groups are easier to detect
@@ -75,6 +146,8 @@ The power of an experiments is affected by several factors. We have seen so far:
 - **Confidence level threshold**: usually, this is 0.05, but we can make our analysis more or less stringent by changing this to 0.01 or 0.1
 
 ## What determines the power of an RNA-seq experiment?
+
+<mwadd>See earlier comments, I think this section should offer some more concrete quantitative advice.</mwadd>
 
 RNA-seq experiments measure the expression levels of thousands of genes simultaneously, meaning we perform thousands of statistical tests at once. To avoid making too many false discoveries (type I errors), we have to correct for multiple testing. However, it also reduces statistical power --- increasing the chance of missing real differences (type II errors). As a result, RNA-seq experiments can have lower power, especially for detecting small or subtle changes in gene expression. 
 
@@ -88,6 +161,8 @@ The figure shows the relationship between sequencing depth and number of replica
 
 ## Experimental design
 
+<mwadd>This is quite a blob of text to say "avoid confounding", and concrete advice is a bit hidden in the text; perhaps re-structure this using good/bad example experimental design? (I guess also text not finished yet, as it says "first of all", but no second or third things are mentioned.)</mwadd>
+
 In a typical biological experiment, you will encounter various sources of variation that are either:
 
 - **Desirable** because they are part of your experimental factors. For example, the genotype, treatment, or timepoint.
@@ -98,4 +173,7 @@ Undesirable variation is unavaidable, but there are some practices to limit thei
 
 ## Concluding remarks
 
+<mwadd>I would replace this text with a list of take home messages.</mwadd>
+
 In this section, we refreshed our statistics knowledge, and discussed how this applies to RNA-seq experiments. Hopefully, this enables you to craft a well-designed and controlled RNA-seq experiment. Now, head to the lab or greenhouse, perform your experiment, and extract high-quality RNA. How to do this will depend on your study system, and is beyond the scope of this workshop. We will see you again when you get the sequencing reads from the sequencing provider. We will then jump into the bioinformatics pipeline required to check the quality of the reads, and map the reads to the genome of your organisms of interest.
+

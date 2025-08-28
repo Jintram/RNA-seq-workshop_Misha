@@ -7,6 +7,15 @@ format:
         code-annotations: hover
 ---
 
+::: {.mwadd}
+(MW) 
+
+Notes to self:
+
+- (I have overview of several RNA-seq methods, DESeq2 isn't only solution)
+
+:::
+
 The main goal of most RNA-seq experiments is to discover which genes are differentially expressed between different groups (treatments, tissues, genotypes): the list of differentially expressed genes (DEGs). After the previous section, we now have a count table with the number of reads that map to each gene in each sample. How do we get to our goal from this table? We will need to use statistical models! In this section, we will use the `DESeq2` package in `R` for differential gene expression analysis. Several other packages with different statistical models and assumptions exist (e.g. `EdgeR` and `Limma`): we pick `DESeq2` because it is robust, widely-used, and user friendly.
 
 ## Reading the count table into DESeq2

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b0b0d9a14c149cd49331999aacf7baac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -218,9 +218,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="mwadd">
+<p>(MW)</p>
+<section id="feedback" class="level3">
+<h3 class="anchored" data-anchor-id="feedback">Feedback</h3>
+<p>The tutorial is now quite text heavy, I think it could benefit from adding more diagrams, highlight boxes, lists etc that emphasize take home messages and learning goals, and which clearify the logical structure of the material.</p>
+<p>I would make some edits in topics and structure, see suggested structure below and other comments.</p>
+<p>I also wonder how to best convey this material to participants. Perhaps an idea is to create some small dataset (I already have some code to create simulated data based on a toy model, see <a href="https://github.com/Jintram/2025-08_RNA-seq-basics/blob/main/simulated_data.R">[1]</a> and <a href="https://github.com/Jintram/2025-08_RNA-seq-basics/blob/main/DESeq2_simulatedData.R">[2]</a>, could be used but not necessarily), and do a code-along session in Carpentries style using that example? If smartly designed, this could highlight the main issues in a dataset.</p>
+<p>I think additionally it’s a good idea to add some literature suggestions re. these topics. Some suggestions (some already included):</p>
+<ul>
+<li><a href="https://doi.org/10.3390/biom13020221">Jeon2023</a>, which discusses stat power for RNA-seq.
+<ul>
+<li>Cites <a href="http://doi.org/10.1261/rna.053959.115">Schurch2016</a></li>
+<li>Cites <a href="https://doi.org/10.1093/bioinformatics/btu640">Wu2015</a></li>
+</ul></li>
+<li><a href="http://doi.org/10.1371/journal.pone.0264246">Li2022</a>, which evaluates several RNA-seq DEG analysis packages.</li>
+</ul>
+</section>
+<section id="structure-this-episode-should-have-imho" class="level3">
+<h3 class="anchored" data-anchor-id="structure-this-episode-should-have-imho">Structure this episode should have imho:</h3>
+<ul>
+<li>Refresh basic stats to be able to discuss topics below (basic comparison w/ t-test)</li>
+<li>Explain challenges related to RNA-seq experiments
+<ul>
+<li>Multiple testing</li>
+<li>Having enough stat power to counter noise</li>
+<li>Pitfalls when designing experiments, e.g.&nbsp;
+<ul>
+<li>Too little samples</li>
+<li>Expecting to find “something” (hypothesis-driven vs.&nbsp;exploratory)</li>
+<li>False positives and difficult to intrepret results (related previous point)</li>
+</ul></li>
+</ul></li>
+<li>Concrete tools and quantitative advice to aid in experimental design
+<ul>
+<li>(Which adress above challenges.)</li>
+</ul></li>
+</ul>
+</section>
+</div>
 <p>Before diving into the bioinformatics of RNA-seq experiments, it’s good to take a step back and think about experimental design and refresh your statistical knowledge. After all, an RNA-seq experiment is also an experiment like any other.</p>
 <section id="hypothesis-testing" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis testing</h2>
+<div class="mwadd">
+<ul>
+<li>This part explains basic statistics, which most people hopefully know already, quite elaborately. Is it the idea people go over this fast?</li>
+<li>Perhaps consider this knowledge that needs refreshing and point out some important nuances
+<ul>
+<li>Technical: (like central tendency &lt;-&gt; mean, effect size)</li>
+<li>Raise important practical caveats, like multiple testing (make ppl understand this problem, and mention we address this later in DE analysis)</li>
+</ul></li>
+</ul>
+</div>
 <p>In an RNA-seq experiment, you will analyze the expression levels of thousands of genes. Before doing that, let us consider statistical tests and their associated p-values for a single gene. Let’s say you are studying a plant gene called “heat stress trancripion factor A-2 (HSFA2)”, whose expression might be induced by…. heat stress (you might have guessed that). You could phrase your <em>null hypothesis</em>:</p>
 <blockquote class="blockquote">
 <p>“The average HSFA2 gene expression is <em>the same</em> in normal conditions and under heat stress in my Arabidopsis seedlings”</p>
@@ -315,10 +364,35 @@ mean of x mean of y
 </div>
 </div>
 <p>Because the <strong>p-value &lt; 0.05</strong>, we can safely reject our null hypothesis, and claim that we have discovered that <em>Arabidopsis</em> significantly upregulates the expression of HSF2A under heat stress. Sounds like it’s time to write this down and submit a manuscript to <em>Nature</em>!</p>
+<p><mwadd>I don’t agree with putting it the way as above. One of the big challenges of RNA-seq is handling multiple testing properly. In RNA-seq, I would not consider a raw p=±0.05 value indicative of anything.</mwadd></p>
 <section id="statistical-power" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-power">Statistical power</h3>
+<div class="mwadd">
+<p>I think this section should offer some clear methods to estimate power, not only qualitative advice. I think we should include (somewhere in the material):</p>
+<ul>
+<li>R’s power testing function.
+<ul>
+<li>Explain ‘power.t.test()’ to illustrate the idea.</li>
+<li>See e.g.&nbsp;<a href="https://github.com/Jintram/2025-08_RNA-seq-basics/blob/main/power-testing.R">here</a></li>
+<li>But this doesn’t address the multiple testing issue.</li>
+</ul></li>
+<li>Packages to estimate required sample size for RNA-seq specifically, that address the multiple testing issue.
+<ul>
+<li>Maybe shouldn’t discuss in detail, but point people towards this, and raise awareness.</li>
+<li>See e.g.:
+<ul>
+<li><a href="https://doi.org/10.1093/bioinformatics/btu640">Wu2015</a>, with the <a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/PROPER/inst/doc/PROPER.pdf">PROPER package</a>, that estimates required sample sizes to achieve stat power X.</li>
+<li><a href="https://doi.org/10.3390/biom13020221">Jeon2023</a>
+<ul>
+<li>(I didn’t deeply look into this, but this this is an important topic. Discuss further?)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 <p>Statistical power is the ability of your experimental sample population to detect differences (in this case, gene expression differences) that actually exist in the real population of your study species out there in the world. There are two main error one could make when testing hypotheses. Type I errors occur when the null hypothesis is rejected wrongly — you detect a significant difference while in reality there is no difference in gene expression (“false positive”). Type II errors also are common in hypothesis testing — they arise if you accept the null hypothesis when in fact a treatment effect exists (“false negative”)</p>
 <p>The power of an experiments is affected by several factors. We have seen so far:</p>
+<p><mwadd>I think an explanatory image with two distributions would be highly useful here.</mwadd></p>
 <ul>
 <li><strong>The number of replicates</strong>: more samples results in a higher power</li>
 <li><strong>Size of the effect</strong>: bigger differences between groups are easier to detect</li>
@@ -329,6 +403,7 @@ mean of x mean of y
 </section>
 <section id="what-determines-the-power-of-an-rna-seq-experiment" class="level2">
 <h2 class="anchored" data-anchor-id="what-determines-the-power-of-an-rna-seq-experiment">What determines the power of an RNA-seq experiment?</h2>
+<p><mwadd>See earlier comments, I think this section should offer some more concrete quantitative advice.</mwadd></p>
 <p>RNA-seq experiments measure the expression levels of thousands of genes simultaneously, meaning we perform thousands of statistical tests at once. To avoid making too many false discoveries (type I errors), we have to correct for multiple testing. However, it also reduces statistical power — increasing the chance of missing real differences (type II errors). As a result, RNA-seq experiments can have lower power, especially for detecting small or subtle changes in gene expression.</p>
 <p>So, how do we deal with that? We have a few parameters to play with when designing an RNA-seq experiment, including deciding the number of reads per sample, and the number of samples per treatment. <a href="https://academic.oup.com/bioinformatics/article/30/3/301/228651">Liu et al., 2014</a> investigated this systematically in an RNA-seq experiment with a human cell line. An exerpt from figure 1 is show below:</p>
 <p><img src="../images/02-de-replicates-2.png" class="img-fluid" style="width:5in"></p>
@@ -337,6 +412,7 @@ mean of x mean of y
 </section>
 <section id="experimental-design" class="level2">
 <h2 class="anchored" data-anchor-id="experimental-design">Experimental design</h2>
+<p><mwadd>This is quite a blob of text to say “avoid confounding”, and concrete advice is a bit hidden in the text; perhaps re-structure this using good/bad example experimental design? (I guess also text not finished yet, as it says “first of all”, but no second or third things are mentioned.)</mwadd></p>
 <p>In a typical biological experiment, you will encounter various sources of variation that are either:</p>
 <ul>
 <li><strong>Desirable</strong> because they are part of your experimental factors. For example, the genotype, treatment, or timepoint.</li>
@@ -346,6 +422,7 @@ mean of x mean of y
 </section>
 <section id="concluding-remarks" class="level2">
 <h2 class="anchored" data-anchor-id="concluding-remarks">Concluding remarks</h2>
+<p><mwadd>I would replace this text with a list of take home messages.</mwadd></p>
 <p>In this section, we refreshed our statistics knowledge, and discussed how this applies to RNA-seq experiments. Hopefully, this enables you to craft a well-designed and controlled RNA-seq experiment. Now, head to the lab or greenhouse, perform your experiment, and extract high-quality RNA. How to do this will depend on your study system, and is beyond the scope of this workshop. We will see you again when you get the sequencing reads from the sequencing provider. We will then jump into the bioinformatics pipeline required to check the quality of the reads, and map the reads to the genome of your organisms of interest.</p>
 
 

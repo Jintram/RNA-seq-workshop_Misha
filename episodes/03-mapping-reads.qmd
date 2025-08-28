@@ -8,6 +8,14 @@ format:
         code-annotations: hover
 ---
 
+
+::: {.mwadd}
+
+- Movie about sequencing protocol:
+    - https://www.youtube.com/watch?v=HMyCqWhwB8E
+
+:::
+
 The moment is there: you received the FASTQ files from your sequencing provider! Now what?
 
 ## Quality control: `fastqc`

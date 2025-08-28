@@ -171,6 +171,16 @@
     ]
   },
   {
+    "objectID": "episodes/03-mapping-reads.html#feedback",
+    "href": "episodes/03-mapping-reads.html#feedback",
+    "title": "From reads to alignments",
+    "section": "",
+    "text": "I think the challenge here is to both provide insights into the mapping (etc) process as well as supply the participants with practical means to perform mapping themselves.\n\n\nPractical means can also be the Galaxy server, or another existing pipeline, and this episode just functions as a way to make people understand what’s going on.\nI think what makes it challenging is that currently the process is explained by a single example, and people won’t know how to modify the process for different organisms, types of data etc. The code shown however already almost constitutes a pipeline template. Perhaps we can:\n\nAlso add some “extended info” where we provide a more extensive command template that includes options for different situatinos (e.g. single read, different read length, different organism, etc).\nInclude a full template script at the end, that includes documentation (in comments) about how one should run and adjust the commands for their needs.\n\n(might already exist somewhere)\n\n\nHowever, it will also remain a challenge that people need to set up a chrunchomics account and get things working there. Perhaps we can write a brief tutorial how to set this up as well? (This can than be material not included in the course, but available to those interested.)\n\n\n\nI think it would also be beneficial to “paint the big picture” upfront (experiment –&gt; count table, see below) and also briefly place each of the steps of this episode in the “big picture” pipeline at the beginning of each paragraph.\n\n\n\nChallenge: people need to understand terminal, piping, shell scripts, etc. Seems a bit much. Maybe take a moment for basics of those too? (And do these things with live coding?) Which editor to use?\n\nQuick tour of terminal basics would include imho:\n\nNavigation (cd, ls, cat, mkdir, pwd, mv, cp, piping?, echo? setting parameters?)\nCalling a program (e.g. “python”, or “echo hello”)\nWriting a script that can be called by a program (for loop that calls hello world python script?)\nSee also: https://swcarpentry.github.io/shell-novice/\n\n\n\n\n\nI think here it would also be beneficial to do a type along in Caprentries style?\nThe code is not extremely long, and will be instructive.\nThere would need to be some more explaining in between.\nOther option: make it purely a notebook that people go through in their own pace and explain stuff personally or colloqually if appropriate (this is how the ML workshop I followed did it).\n\n\n\n\nMovie about sequencing protocol:\n\nYT illumina",
+    "crumbs": [
+      "From reads to alignments"
+    ]
+  },
+  {
     "objectID": "episodes/03-mapping-reads.html#quality-control-fastqc",
     "href": "episodes/03-mapping-reads.html#quality-control-fastqc",
     "title": "From reads to alignments",
@@ -294,15 +304,5 @@
     "title": "Welcome",
     "section": "Credits",
     "text": "Credits\nThis workshop is based on other teaching materials available online. The primary source is the RNA-seq lesson designed by the Science Park Study Group, which in turn was based on Harvard Chan Bioinformatics Core RNA-seq materials."
-  },
-  {
-    "objectID": "episodes/03-mapping-reads.html#feedback",
-    "href": "episodes/03-mapping-reads.html#feedback",
-    "title": "From reads to alignments",
-    "section": "",
-    "text": "I think the challenge here is to both provide insights into the mapping (etc) process as well as supply the participants with practical means to perform mapping themselves.\n\n\nPractical means can also be the Galaxy server, or another existing pipeline, and this episode just functions as a way to make people understand what’s going on.\nI think what makes it challenging is that currently the process is explained by a single example, and people won’t know how to modify the process for different organisms, types of data etc. The code shown however already almost constitutes a pipeline template. Perhaps we can:\n\nAlso add some “extended info” where we provide a more extensive command template that includes options for different situatinos (e.g. single read, different read length, different organism, etc).\nInclude a full template script at the end, that includes documentation (in comments) about how one should run and adjust the commands for their needs.\n\n(might already exist somewhere)\n\n\nHowever, it will also remain a challenge that people need to set up a chrunchomics account and get things working there. Perhaps we can write a brief tutorial how to set this up as well? (This can than be material not included in the course, but available to those interested.)\n\n\n\nI think it would also be beneficial to “paint the big picture” upfront (experiment –&gt; count table, see below) and also briefly place each of the steps of this episode in the “big picture” pipeline at the beginning of each paragraph.\n\n\n\nChallenge: people need to understand terminal, piping, shell scripts, etc. Seems a bit much. Maybe take a moment for basics of those too? (And do these things with live coding?) Which editor to use?\n\nQuick tour of terminal basics would include imho:\n\nNavigation (cd, ls, cat, mkdir, pwd, mv, cp, piping?, echo? setting parameters?)\nCalling a program (e.g. “python”, or “echo hello”)\nWriting a script that can be called by a program (for loop that calls hello world python script?)\nSee also: https://swcarpentry.github.io/shell-novice/\n\n\n\n\n\nI think here it would also be beneficial to do a type along in Caprentries style?\nThe code is not extremely long, and will be instructive.\nThere would need to be some more explaining in between.\nOther option: make it purely a notebook that people go through in their own pace and explain stuff personally or colloqually if appropriate (this is how the ML workshop I followed did it).\n\n\n\n\nMovie about sequencing protocol:\n\nYT illumina",
-    "crumbs": [
-      "From reads to alignments"
-    ]
   }
 ]

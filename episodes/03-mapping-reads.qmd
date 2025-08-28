@@ -11,14 +11,88 @@ format:
 
 ::: {.mwadd}
 
+## Feedback:
+
+I think the challenge here is to both provide insights into the mapping (etc) process as well 
+as supply the participants with practical means to perform mapping themselves.
+
+#### How make sure ppl can apply themselves?
+
+Practical means can also be the Galaxy server, or another existing pipeline, and this episode just functions as a way 
+to make people understand what's going on.
+
+I think what makes it challenging is that currently the process is explained by a single 
+example, and people won't know how to modify the process for different organisms, types of data etc.
+The code shown however already almost constitutes a pipeline template. Perhaps we can: 
+
+- Also add some "extended info" where we provide a more extensive command template that includes options for different situatinos (e.g. single read, different read length, different organism, etc).
+- Include a full template script at the end, that includes documentation (in comments) about how one should run and adjust the commands for their needs. 
+    - (might already exist somewhere)
+
+However, it will also remain a challenge that people need to set up a chrunchomics account and get things 
+working there. Perhaps we can write a brief tutorial how to set this up as well? (This can than be material not 
+included in the course, but available to those interested.)
+
+#### Adding structure
+
+I think it would also be beneficial to "paint the big picture" upfront (experiment --> count table, see below)
+and also briefly place each of the steps of this episode in the "big picture" pipeline at the beginning of each paragraph.
+
+#### What about terminal skills?
+
+Challenge: people need to understand terminal, piping, shell scripts, etc. Seems a bit much. Maybe take a moment for basics of those too? (And do these things with live coding?) Which editor to use?
+
+- Quick tour of terminal basics would include imho:
+    - Navigation (cd, ls, cat, mkdir, pwd, mv, cp, piping?, echo? setting parameters?)
+    - Calling a program (e.g. "python", or "echo hello")
+    - Writing a script that can be called by a program (for loop that calls hello world python script?)
+    - See also: https://swcarpentry.github.io/shell-novice/
+
+#### How to teach this episode?
+
+I think here it would also be beneficial to do a type along in Caprentries style?
+
+The code is not extremely long, and will be instructive.
+
+There would need to be some more explaining in between.
+
+Other option: make it purely a notebook that people go through in their own pace and 
+explain stuff personally or colloqually if appropriate (this is how the ML workshop I followed
+did it).
+
+#### Perhaps additional useful contents
+
 - Movie about sequencing protocol:
-    - https://www.youtube.com/watch?v=HMyCqWhwB8E
+    - [YT illumina](https://www.youtube.com/watch?v=HMyCqWhwB8E)
 
 :::
+
+
+::: {.mwadd}
+
+Perhaps an image like this would be instructive to give a big picture (I made this in powerpoint):
+
+![RNA-seq overview](../images/RNA-seq-overview.png){fig-alt="RNA-seq data" fig-cap="Overview of RNA-seq pipeline." width=70% style="background:#fff;"}
+
+:::
+
 
 The moment is there: you received the FASTQ files from your sequencing provider! Now what?
 
 ## Quality control: `fastqc`
+
+::: {.mwadd}
+
+I think some context is lacking here. What is our goal? 
+Maybe add paragraph at start that outlines the whole process?
+
+Our goal is to obtain count table, but what we have is just sequence information.
+
+So we should convert sequence information to genes, and count observations of each genes.
+
+Beforehand, we want to make sure sequence information is solid --> QC.
+
+:::
 
 The first step in the RNA-seq workflow is to assess the quality of the sequencing reads. Sequence reads generated from next-generation sequencing technologies come in the FASTQ file format. This file format evolved from FASTA: it contains sequence data, but also contains quality information. For a single record (sequence read) there are four lines, each of which are described below:
 
@@ -30,6 +104,27 @@ The first step in the RNA-seq workflow is to assess the quality of the sequencin
 |4|Has a string of characters which represent the quality scores; must have same number of characters as line 2|
 
 Let's run `fastqc` on one sample:
+
+::: {.mwadd}
+
+- fastqc is now suddenly used without introduction. 
+- also terminal commands are used without introduction
+
+However, I like the focus on practical stuff, without extensive explantations.
+
+Perhaps work with information boxes to explain what each tool is?
+
+:::
+
+
+
+::: {.callout-tip} 
+## Bio-inf tool: FastQC
+
+FastQC is a quality control tool for DNA or RNA sequencing data. It takes the raw sequence files (FASTQ format) and quickly checks for common issues, like overall read quality, presence of adapters, unusual base composition, or overrepresented sequences. The output is a simple report with plots and summaries that help you see if your sequencing run worked well or if there might be problems before doing further analysis.
+
+<mwadd>(added by mw/text by chatGPT)</mwadd>
+:::
 
 ```{bash filename="bash"}
 #| eval: false
@@ -45,6 +140,8 @@ for filename in  /datasets/*.fq.gz # <1>
     fastqc -o fastqc $filename # <2>
   done
 ```
+
+<mwadd>I think for a command like this, a template file (see comments above) with more extensive documentatino makes sense. Comments could be added explaining very precisely what every part of the command is doing (including every small detail, e.g. do and done being keywords that begin/end the loop etc.).</mwadd>
 
 1. Here we define a variable `filename` that will subsequently get the values of all datasets matching the `/datasets/*.fq.gz` statement, where `*` acts as a wildcard.
 2. Here we add the actual command, where `$filename` will subsequently be filled in with all of our four filenames.
@@ -65,7 +162,19 @@ Let's download one of them, and inspect the results:
 
 `fastqc` gives the reads of each sample a score (Pass, Warning, or Fail) on several different modules and this is reported in the **Summary**. The next section contains basic statistics like the number of reads, average sequence length, and the GC content. Generally it is a good idea to keep track of the total number of reads sequenced for each sample and to make sure the read length and %GC content is as expected. One of the most important analysis modules is the **“Per base sequence quality”** plot. This plot provides the distribution of quality scores at each position in the read across all reads. This plot can alert us to whether there were any problems occuring during sequencing and whether we might need to contact the sequencing facility.  Other modules are discussed in detail [here](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html). Note that nearly all sequencing datasets will show yellow warnings or red fails: `fastqc` is quite conservative. Your experiment is not lost if you get warnings or fails, but it warrants additional inspection of the reads.
 
+<mwadd>Perhaps also suggest that if they suspect something wrong they could contact us/their sequencer/their favorite bioinformatician.</mwadd>
+
 **TODO: add screenshots of good/bad fastqc results**
+
+::: {.mwadd}
+
+I think it would be nice to not only include screenshot good/bad fastqc results, 
+but also clearly (e.g. add some arrows with text) annotate those pictures explaining/highlighting
+how to interpret important numbers / features.
+
+Sort of a "cheat sheet" for fastq.
+
+:::
 
 ## Trimming: `trimmomatic`
 
@@ -109,6 +218,16 @@ In experiments where we don't need to think about exon-intron boundaries. This i
 
 To use an aligner, we must first get the **reference genome** and then *index* the reference genome. Indexing the genome prepares the genome in a way that allows a computer to search it efficiently. The genome, a multi-million basepair long string of text, is encoded into a different, computer-friendly datastructure such as a suffix tree. The details of this procedure are beyond the scope of this workshop, but it's important to do it. So, let's go ahead and download the *Arabidopsis thaliana* reference genome, and index it:
 
+::: {.mwadd}
+I think important information is where you can get reference genomes and additional information (eg gtf files). 
+Will be usefull to add info-box about this as well. E.g. include:
+
+- typically can be downloaded from NCBI/Ensembl
+- beware there are multiple versions, track which one used
+- you need to click here and here to find and download genome
+
+:::
+
 ```{bash filename="bash"}
 #| eval: false
 # TODO: Add download command here (via wget), OR already have the genome in the github repo
@@ -133,7 +252,15 @@ It's important to check how many reads did not map to the reference genome. A hi
 
 **TODO: (Maybe as an additional exercise?) Add one subsetted dataset to demonstrate this, from the verhoeven paper.**
 
+<mwadd>Can we add some quantitative guidelines when people need to worry? (To get these numbers, we could also inquire at ppl who regularly perform mapping, like MAD group ppl (Wim/Martijs?).)</mwadd>
+
 ### BAM and SAM files
+
+::: {.mwadd}
+Not sure, consideration: is "the mapped reads" use of jargon, that might require some explaining? Same would then apply to other jargon.
+
+E.g. sugg: "The output of STAR are files in which the mapping of our original sequences to DNA locations are stored. These are .bam and .sam files (..)"
+:::
 
 The mapped reads are stored in a `.bam` file by `STAR`. `.bam` and `.sam` files keep information for each individual read and its alignment to the genome. `.sam` files do this in a tab-seperated, human readable format, while `.bam` files store the same information in a binary file format that's not readable for humans, but is much more efficient to process and store by computers. `samtools` is a widely used program to inspect and manipulate `.sam` and `.bam` files. Like many command line programs, `samtools` commands can be connected to each other via the pipe symbol `|`, and the results can be stored in a new file using the `>` symbol. 
 
@@ -193,6 +320,8 @@ for filename in  /datasets/*.fq.gz
 
 ### Inspecting the mapping on a genome browser
 
+<mwadd>I like this a load, but in view of time I think this part should be made optional. Maybe existence of viewer can be mentioned during "lecture" part of workshop, but only talk about screenshot for ±1 minute.</mwadd>
+
 **TODO**:
 
 - download one bam + bai file and inspect mapping in genome browser
@@ -218,6 +347,8 @@ In bioinformatics, there are often many ways to reach the same goal. Here we hav
 | Mapping | `STAR` | `HISAT2` |
 | Counting | `featureCounts` | `StringTie` |
 
+<mwadd>Potentially add: trimgalore, bwa-mem(2) (not splice aware)</mwadd>
+
 ## Streamlining read mapping procedure
 
 If you find this process quite cumbersome, then I have good news for you! There are *pipelines* available that streamline the chain of commands required for mapping:
@@ -225,4 +356,7 @@ If you find this process quite cumbersome, then I have good news for you! There 
 - [snakemake_rnaseq](https://github.com/BleekerLab/snakemake_rnaseq), developed at the Bleeker Lab (UvA).
 - [nf-core/rnaseq](https://nf-co.re/rnaseq/3.19.0), developed and maintained by the Nextflow community.
 
+<mwadd>To add: Galaxy server</mwadd>
+
 A full instruction of these pipelines is beyond the scope of this workshop. Also, we wish to highlight that it is *very insightful* to have run all the steps by yourself rather than in a pipeline.
+

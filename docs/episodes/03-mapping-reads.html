@@ -186,7 +186,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quality-control-fastqc" id="toc-quality-control-fastqc" class="nav-link active" data-scroll-target="#quality-control-fastqc">Quality control: <code>fastqc</code></a></li>
+  <li><a href="#feedback" id="toc-feedback" class="nav-link active" data-scroll-target="#feedback">Feedback:</a></li>
+  <li><a href="#quality-control-fastqc" id="toc-quality-control-fastqc" class="nav-link" data-scroll-target="#quality-control-fastqc">Quality control: <code>fastqc</code></a></li>
   <li><a href="#trimming-trimmomatic" id="toc-trimming-trimmomatic" class="nav-link" data-scroll-target="#trimming-trimmomatic">Trimming: <code>trimmomatic</code></a></li>
   <li><a href="#mapping-star" id="toc-mapping-star" class="nav-link" data-scroll-target="#mapping-star">Mapping: <code>STAR</code></a>
   <ul class="collapse">
@@ -221,9 +222,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="feedback" class="level2 mwadd">
+<h2 class="anchored" data-anchor-id="feedback">Feedback:</h2>
+<p>I think the challenge here is to both provide insights into the mapping (etc) process as well as supply the participants with practical means to perform mapping themselves.</p>
+<section id="how-make-sure-ppl-can-apply-themselves" class="level4">
+<h4 class="anchored" data-anchor-id="how-make-sure-ppl-can-apply-themselves">How make sure ppl can apply themselves?</h4>
+<p>Practical means can also be the Galaxy server, or another existing pipeline, and this episode just functions as a way to make people understand what’s going on.</p>
+<p>I think what makes it challenging is that currently the process is explained by a single example, and people won’t know how to modify the process for different organisms, types of data etc. The code shown however already almost constitutes a pipeline template. Perhaps we can:</p>
+<ul>
+<li>Also add some “extended info” where we provide a more extensive command template that includes options for different situatinos (e.g.&nbsp;single read, different read length, different organism, etc).</li>
+<li>Include a full template script at the end, that includes documentation (in comments) about how one should run and adjust the commands for their needs.
+<ul>
+<li>(might already exist somewhere)</li>
+</ul></li>
+</ul>
+<p>However, it will also remain a challenge that people need to set up a chrunchomics account and get things working there. Perhaps we can write a brief tutorial how to set this up as well? (This can than be material not included in the course, but available to those interested.)</p>
+</section>
+<section id="adding-structure" class="level4">
+<h4 class="anchored" data-anchor-id="adding-structure">Adding structure</h4>
+<p>I think it would also be beneficial to “paint the big picture” upfront (experiment –&gt; count table, see below) and also briefly place each of the steps of this episode in the “big picture” pipeline at the beginning of each paragraph.</p>
+</section>
+<section id="what-about-terminal-skills" class="level4">
+<h4 class="anchored" data-anchor-id="what-about-terminal-skills">What about terminal skills?</h4>
+<p>Challenge: people need to understand terminal, piping, shell scripts, etc. Seems a bit much. Maybe take a moment for basics of those too? (And do these things with live coding?) Which editor to use?</p>
+<ul>
+<li>Quick tour of terminal basics would include imho:
+<ul>
+<li>Navigation (cd, ls, cat, mkdir, pwd, mv, cp, piping?, echo? setting parameters?)</li>
+<li>Calling a program (e.g.&nbsp;“python”, or “echo hello”)</li>
+<li>Writing a script that can be called by a program (for loop that calls hello world python script?)</li>
+<li>See also: https://swcarpentry.github.io/shell-novice/</li>
+</ul></li>
+</ul>
+</section>
+<section id="how-to-teach-this-episode" class="level4">
+<h4 class="anchored" data-anchor-id="how-to-teach-this-episode">How to teach this episode?</h4>
+<p>I think here it would also be beneficial to do a type along in Caprentries style?</p>
+<p>The code is not extremely long, and will be instructive.</p>
+<p>There would need to be some more explaining in between.</p>
+<p>Other option: make it purely a notebook that people go through in their own pace and explain stuff personally or colloqually if appropriate (this is how the ML workshop I followed did it).</p>
+</section>
+<section id="perhaps-additional-useful-contents" class="level4">
+<h4 class="anchored" data-anchor-id="perhaps-additional-useful-contents">Perhaps additional useful contents</h4>
+<ul>
+<li>Movie about sequencing protocol:
+<ul>
+<li><a href="https://www.youtube.com/watch?v=HMyCqWhwB8E">YT illumina</a></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<div class="mwadd">
+<p>Perhaps an image like this would be instructive to give a big picture (I made this in powerpoint):</p>
+<div class="quarto-figure quarto-figure-center" style="background:#fff;">
+<figure class="figure">
+<p><img src="../images/RNA-seq-overview.png" class="img-fluid figure-img" style="width:70.0%" alt="RNA-seq data"></p>
+<figcaption>RNA-seq overview</figcaption>
+</figure>
+</div>
+</div>
 <p>The moment is there: you received the FASTQ files from your sequencing provider! Now what?</p>
 <section id="quality-control-fastqc" class="level2">
 <h2 class="anchored" data-anchor-id="quality-control-fastqc">Quality control: <code>fastqc</code></h2>
+<div class="mwadd">
+<p>I think some context is lacking here. What is our goal? Maybe add paragraph at start that outlines the whole process?</p>
+<p>Our goal is to obtain count table, but what we have is just sequence information.</p>
+<p>So we should convert sequence information to genes, and count observations of each genes.</p>
+<p>Beforehand, we want to make sure sequence information is solid –&gt; QC.</p>
+</div>
 <p>The first step in the RNA-seq workflow is to assess the quality of the sequencing reads. Sequence reads generated from next-generation sequencing technologies come in the FASTQ file format. This file format evolved from FASTA: it contains sequence data, but also contains quality information. For a single record (sequence read) there are four lines, each of which are described below:</p>
 <table class="caption-top table">
 <colgroup>
@@ -256,6 +322,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Let’s run <code>fastqc</code> on one sample:</p>
+<div class="mwadd">
+<ul>
+<li>fastqc is now suddenly used without introduction.</li>
+<li>also terminal commands are used without introduction</li>
+</ul>
+<p>However, I like the focus on practical stuff, without extensive explantations.</p>
+<p>Perhaps work with information boxes to explain what each tool is?</p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bio-inf tool: FastQC
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>FastQC is a quality control tool for DNA or RNA sequencing data. It takes the raw sequence files (FASTQ format) and quickly checks for common issues, like overall read quality, presence of adapters, unusual base composition, or overrepresented sequences. The output is a simple report with plots and summaries that help you see if your sequencing run worked well or if there might be problems before doing further analysis.</p>
+<p><mwadd>(added by mw/text by chatGPT)</mwadd></p>
+</div>
+</div>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -270,24 +358,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode bash code-annotation-code code-with-copy code-annotated"><code class="sourceCode bash"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span>  /datasets/<span class="pp">*</span>.fq.gz</span>
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode bash code-annotation-code code-with-copy"><code class="sourceCode bash"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span>  /datasets/<span class="pp">*</span>.fq.gz</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">do</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">fastqc</span> <span class="at">-o</span> fastqc <span class="va">$filename</span></span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Here we define a variable <code>filename</code> that will subsequently get the values of all datasets matching the <code>/datasets/*.fq.gz</code> statement, where <code>*</code> acts as a wildcard.</span>
-</dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="2">Here we add the actual command, where <code>$filename</code> will subsequently be filled in with all of our four filenames.</span>
-</dd>
-</dl>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">fastqc</span> <span class="at">-o</span> fastqc <span class="va">$filename</span></span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<p><mwadd>I think for a command like this, a template file (see comments above) with more extensive documentatino makes sense. Comments could be added explaining very precisely what every part of the command is doing (including every small detail, e.g.&nbsp;do and done being keywords that begin/end the loop etc.).</mwadd></p>
+<ol type="1">
+<li>Here we define a variable <code>filename</code> that will subsequently get the values of all datasets matching the <code>/datasets/*.fq.gz</code> statement, where <code>*</code> acts as a wildcard.</li>
+<li>Here we add the actual command, where <code>$filename</code> will subsequently be filled in with all of our four filenames.</li>
+</ol>
 <p><code>fastq</code> generates reports of each sample in <code>.html</code> format:</p>
 <div class="cell">
 <div class="code-with-filename">
@@ -307,7 +388,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>fastqc</code> gives the reads of each sample a score (Pass, Warning, or Fail) on several different modules and this is reported in the <strong>Summary</strong>. The next section contains basic statistics like the number of reads, average sequence length, and the GC content. Generally it is a good idea to keep track of the total number of reads sequenced for each sample and to make sure the read length and %GC content is as expected. One of the most important analysis modules is the <strong>“Per base sequence quality”</strong> plot. This plot provides the distribution of quality scores at each position in the read across all reads. This plot can alert us to whether there were any problems occuring during sequencing and whether we might need to contact the sequencing facility. Other modules are discussed in detail <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html">here</a>. Note that nearly all sequencing datasets will show yellow warnings or red fails: <code>fastqc</code> is quite conservative. Your experiment is not lost if you get warnings or fails, but it warrants additional inspection of the reads.</p>
+<p><mwadd>Perhaps also suggest that if they suspect something wrong they could contact us/their sequencer/their favorite bioinformatician.</mwadd></p>
 <p><strong>TODO: add screenshots of good/bad fastqc results</strong></p>
+<div class="mwadd">
+<p>I think it would be nice to not only include screenshot good/bad fastqc results, but also clearly (e.g.&nbsp;add some arrows with text) annotate those pictures explaining/highlighting how to interpret important numbers / features.</p>
+<p>Sort of a “cheat sheet” for fastq.</p>
+</div>
 </section>
 <section id="trimming-trimmomatic" class="level2">
 <h2 class="anchored" data-anchor-id="trimming-trimmomatic">Trimming: <code>trimmomatic</code></h2>
@@ -338,7 +424,7 @@ Exercise
 </div>
 </div>
 <div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -347,7 +433,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>We can run <code>fastqc</code> again, this time on the trimmed reads.</li>
@@ -384,7 +470,7 @@ Question
 </div>
 </div>
 <div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -393,13 +479,21 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In experiments where we don’t need to think about exon-intron boundaries. This is the case when the reads originate from genomic DNA, for example for whole genome sequencing experiments, or enrichment sequencing experiments like Chip-Seq.</p>
 </div>
 </div>
 </div>
 <p>To use an aligner, we must first get the <strong>reference genome</strong> and then <em>index</em> the reference genome. Indexing the genome prepares the genome in a way that allows a computer to search it efficiently. The genome, a multi-million basepair long string of text, is encoded into a different, computer-friendly datastructure such as a suffix tree. The details of this procedure are beyond the scope of this workshop, but it’s important to do it. So, let’s go ahead and download the <em>Arabidopsis thaliana</em> reference genome, and index it:</p>
+<div class="mwadd">
+<p>I think important information is where you can get reference genomes and additional information (eg gtf files). Will be usefull to add info-box about this as well. E.g. include:</p>
+<ul>
+<li>typically can be downloaded from NCBI/Ensembl</li>
+<li>beware there are multiple versions, track which one used</li>
+<li>you need to click here and here to find and download genome</li>
+</ul>
+</div>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -429,8 +523,13 @@ Solution
 </div>
 <p>It’s important to check how many reads did not map to the reference genome. A high proportion of unmapped reads can be a warning sign that something went wrong in your experiment or analysis. The explanations may be technical (bad read quality), bioinformatical (perhaps you used the wrong reference genome!), or biological — it has been well documented that around 11% of primate and rodent cell-line RNA-seq datasets available on NCBI in 2015 were contaminated with mycoplasma RNA (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4357728/">Olarerin-George &amp; Hogenesch, 2015</a>). Likewise, 8,5% of all <em>Arabidopsis thaliana</em> NCBI RNA-seq datasets are contaminated with a virus that does not cause any disease symptoms, but can cover up to 80% of all reads generated in an RNA-seq experiment (<a href="https://nph.onlinelibrary.wiley.com/doi/full/10.1111/nph.18466">Verhoeven et al., 2022</a>). That said, we don’t need to aim for 100% reads mapped to the reference genome. There will always be some contamination, or your studied individual possesses genetic information not present in the reference genome.</p>
 <p><strong>TODO: (Maybe as an additional exercise?) Add one subsetted dataset to demonstrate this, from the verhoeven paper.</strong></p>
+<p><mwadd>Can we add some quantitative guidelines when people need to worry? (To get these numbers, we could also inquire at ppl who regularly perform mapping, like MAD group ppl (Wim/Martijs?).)</mwadd></p>
 <section id="bam-and-sam-files" class="level3">
 <h3 class="anchored" data-anchor-id="bam-and-sam-files">BAM and SAM files</h3>
+<div class="mwadd">
+<p>Not sure, consideration: is “the mapped reads” use of jargon, that might require some explaining? Same would then apply to other jargon.</p>
+<p>E.g. sugg: “The output of STAR are files in which the mapping of our original sequences to DNA locations are stored. These are .bam and .sam files (..)”</p>
+</div>
 <p>The mapped reads are stored in a <code>.bam</code> file by <code>STAR</code>. <code>.bam</code> and <code>.sam</code> files keep information for each individual read and its alignment to the genome. <code>.sam</code> files do this in a tab-seperated, human readable format, while <code>.bam</code> files store the same information in a binary file format that’s not readable for humans, but is much more efficient to process and store by computers. <code>samtools</code> is a widely used program to inspect and manipulate <code>.sam</code> and <code>.bam</code> files. Like many command line programs, <code>samtools</code> commands can be connected to each other via the pipe symbol <code>|</code>, and the results can be stored in a new file using the <code>&gt;</code> symbol.</p>
 <div class="cell">
 <div class="code-with-filename">
@@ -458,7 +557,7 @@ Exercise
 </div>
 </div>
 <div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -467,7 +566,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
@@ -507,7 +606,7 @@ Exercise
 </div>
 </div>
 <div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -516,7 +615,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><code>samtools flagstat</code> shows us (just like the <code>STAR</code> log file) how many reads were mapped correctly. In addition, it tells us whether read pairs (if mapping paired-end data) mapped together as expected.</li>
@@ -539,7 +638,7 @@ Exercise
 </div>
 </div>
 <div class="callout callout-style-default callout-caution no-icon callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -548,7 +647,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
@@ -568,6 +667,7 @@ Solution
 </section>
 <section id="inspecting-the-mapping-on-a-genome-browser" class="level3">
 <h3 class="anchored" data-anchor-id="inspecting-the-mapping-on-a-genome-browser">Inspecting the mapping on a genome browser</h3>
+<p><mwadd>I like this a load, but in view of time I think this part should be made optional. Maybe existence of viewer can be mentioned during “lecture” part of workshop, but only talk about screenshot for ±1 minute.</mwadd></p>
 <p><strong>TODO</strong>:</p>
 <ul>
 <li>download one bam + bai file and inspect mapping in genome browser</li>
@@ -617,6 +717,7 @@ Solution
 </tr>
 </tbody>
 </table>
+<p><mwadd>Potentially add: trimgalore, bwa-mem(2) (not splice aware)</mwadd></p>
 </section>
 <section id="streamlining-read-mapping-procedure" class="level2">
 <h2 class="anchored" data-anchor-id="streamlining-read-mapping-procedure">Streamlining read mapping procedure</h2>
@@ -625,6 +726,7 @@ Solution
 <li><a href="https://github.com/BleekerLab/snakemake_rnaseq">snakemake_rnaseq</a>, developed at the Bleeker Lab (UvA).</li>
 <li><a href="https://nf-co.re/rnaseq/3.19.0">nf-core/rnaseq</a>, developed and maintained by the Nextflow community.</li>
 </ul>
+<p><mwadd>To add: Galaxy server</mwadd></p>
 <p>A full instruction of these pipelines is beyond the scope of this workshop. Also, we wish to highlight that it is <em>very insightful</em> to have run all the steps by yourself rather than in a pipeline.</p>
 
 

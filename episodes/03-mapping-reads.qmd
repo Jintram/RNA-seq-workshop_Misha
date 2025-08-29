@@ -13,8 +13,14 @@ format:
 
 ## Feedback:
 
+The structure of going through main important commands during mapping is good, imo.
+
+I think there are some challenges with teaching this material in a short time.
+
 I think the challenge here is to both provide insights into the mapping (etc) process as well 
 as supply the participants with practical means to perform mapping themselves.
+
+## Some further thoughts:
 
 #### How make sure ppl can apply themselves?
 

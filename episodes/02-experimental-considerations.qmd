@@ -13,6 +13,8 @@ format:
 
 ### Feedback    
     
+I thikn the general outline is there, though I would consider some changes.
+
 The tutorial is now quite text heavy, I think it could benefit from adding more
 diagrams, highlight boxes, lists etc that emphasize take home messages and learning goals,
 and which clearify the logical structure of the material.
@@ -26,12 +28,14 @@ could be used but not necessarily), and do a code-along session in Carpentries s
 If smartly designed, this could highlight the main issues in a dataset.
 
 I think additionally it's a good idea to add some literature suggestions re. these topics.
-Some suggestions (some already included):
+Some suggestions (some were already included):
 
 - [Jeon2023](https://doi.org/10.3390/biom13020221), which discusses stat power for RNA-seq.
     - Cites [Schurch2016](http://doi.org/10.1261/rna.053959.115)
     - Cites [Wu2015](https://doi.org/10.1093/bioinformatics/btu640)
 - [Li2022](http://doi.org/10.1371/journal.pone.0264246), which evaluates several RNA-seq DEG analysis packages.
+    - (Perhaps this comparison is convenient for later episode)
+    - (I also made an overview how many times each package was cited last year)
     
 ### Structure this episode should have imho:
 

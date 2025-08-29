@@ -31,22 +31,31 @@ After this workshop, you should be able to:
 
 insert table here
 
-<mwadd><font color=#0000cc>
+::: {.mwadd}
+
 *Trying to estimate times for each parts.*
 
-XXXX CONTINUE EDITING OUTLINE BELOW!!
-SEE ALSO "NOTES_MW.MD"
+| Day    | Episode                                            | Duration   | Time       |
+|--------|----------------------------------------------------|------------|------------|
+| Day 1  | Experimental considerations                        | 30 min     | 13:00      |
+| Day 1  | From FASTQ to count table -- code along            | 60 min     | 13:30      |
+| Day 1  | Break                                              | 30 min     | 14:30      |
+| Day 1  | From FASTQ to count table -- code yourself         | 90 min     | 15:00      |
+| Day 1  | (end)                                              | /          | 16:30      |
 
-1. Experimental considerations
-    - Talk about explorative experiments (difficult) vs. looking for specific hypothesis.
-    - Beneficial to include power testing (PROPER or ssizeRNA)?
-2. From FASTQ to count table 
-    - includes using terminal!
-3. Differential expression analysis
-4. Enrichment analysis
+| Day    | Episode                                            | Duration   | Time       |
+|--------|----------------------------------------------------|------------|------------|
+| Day 1  | Differential expression analysis -- code along     | 60 min     | 13:00      |
+| Day 1  | Differential expression analysis -- code yourself  | 90 min     | 13:00      |
+| Day 1  | Break                                              | 30 min     | 14:30      |
+| Day 1  | Enrichment analysis -- lecture                     | 30 min     | 15:00      |
+| Day 1  | Enrichment analysis -- code yourself               | 30 min     | 15:00      |
+| Day 1  | (end)                                              | /          | 17:00      |
 
-</font>
-</mwadd>
+Perhaps make this also three afternoons??
+The second day seems awefully tight..
+
+:::
 
 
 ## Maintainers

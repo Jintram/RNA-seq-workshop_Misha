@@ -7,6 +7,15 @@ format:
         code-annotations: hover
 ---
 
+::: {.mwadd}
+
+I wonder how much time there's left if everything before this is covered, so I'd keep this section rather short to essentials.
+If people are able to generate a DEG table they've already come a long way.
+
+(No further feedback since this section isn't finished yet I think.)
+
+:::
+
 ## Clustering and heatmaps
 
 **TODO**: add some text to describe the heatmap 

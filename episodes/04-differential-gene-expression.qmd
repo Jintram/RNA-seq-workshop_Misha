@@ -25,8 +25,14 @@ A diagram like below, or a more explanatory variation thereof, might be useful:
 
 ![Illustration of p-value adjustment (multiple testing correction), [source](https://geneviatechnologies.com/blog/what-is-multiple-testing-correction/).](../images/histogram-p-adjustment_geneviatech.png){fig-alt="p-value adjustment diagram" width=60%}
 
-#### Additional stuff
+#### Furthermore
+- We need to point out that RNA ≠ protein, so validation is important.
+- Do we want to include normalized effect sizes? Might be pretty useful, but it's also yet more content.
 - I made a little overview of how often different DEG analysis packages are cited last year; but don't think that's very valuable to add here.
+- Add links to reading materials?
+    - https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#theory
+	- https://master.bioconductor.org/packages/release/workflows/html/rnaseqGene.html
+		- (More accessible, according to Love.)
 
 :::
 
@@ -444,6 +450,8 @@ Great!
 
 Otherwise (and more common probably) you'll need to now start a carefull dissection of your results to design validation and follow-up experiments.
 This can be done by many means, which we'll partially dive into in the next section.
+
+<mwadd>TO DO: add important caveat here: RNA-seq is nice but really needs validation because fo noise and RNA ≠ protein expression.</mwadd>
 
 Next, we will display the our gene expression data in a heatmap, another popular plot of choice for RNA-seq experiments. 
 In addition, we will look into charactering the molecular functions of up- and down-regulated genes using GO term annotation and enrichment.

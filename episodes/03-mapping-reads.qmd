@@ -44,6 +44,8 @@ included in the course, but available to those interested.)
 I think it would also be beneficial to "paint the big picture" upfront (experiment --> count table, see below)
 and also briefly place each of the steps of this episode in the "big picture" pipeline at the beginning of each paragraph.
 
+Might also be good to explain a little bit about how the FASTQ files result from experiments (see overview picture below also).
+
 #### What about terminal skills?
 
 Challenge: people need to understand terminal, piping, shell scripts, etc. Seems a bit much. Maybe take a moment for basics of those too? (And do these things with live coding?) Which editor to use?

@@ -15,9 +15,10 @@ I have added feedback to each of the episodes in these orange boxes.
 
 -- Martijn
 
-### Some other feedback not added to episodes
+### Further general feedback
 
-(**TO DO:** Add this from notes.)
+- What about entry level requirements? Do people need to have followed to introduction to R course?
+- See tentative time table below
 
 :::
 

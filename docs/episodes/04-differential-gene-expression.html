@@ -272,10 +272,20 @@ window.Quarto = {
 <figcaption>Illustration of p-value adjustment (multiple testing correction), <a href="https://geneviatechnologies.com/blog/what-is-multiple-testing-correction/">source</a>.</figcaption>
 </figure>
 </div>
-<section id="additional-stuff" class="level4">
-<h4 class="anchored" data-anchor-id="additional-stuff">Additional stuff</h4>
+<section id="furthermore" class="level4">
+<h4 class="anchored" data-anchor-id="furthermore">Furthermore</h4>
 <ul>
+<li>We need to point out that RNA ≠ protein, so validation is important.</li>
+<li>Do we want to include normalized effect sizes? Might be pretty useful, but it’s also yet more content.</li>
 <li>I made a little overview of how often different DEG analysis packages are cited last year; but don’t think that’s very valuable to add here.</li>
+<li>Add links to reading materials?
+<ul>
+<li>https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#theory</li>
+<li>https://master.bioconductor.org/packages/release/workflows/html/rnaseqGene.html
+<ul>
+<li>(More accessible, according to Love.)</li>
+</ul></li>
+</ul></li>
 </ul>
 </section>
 </section>
@@ -868,6 +878,7 @@ Solution
 <p>Hopefully, your experiment yielded many genes that showed differential expression that was significant. This also poses you with a problem: which of those are biologically most relevant to look into further? How do we e.g.&nbsp;sort out 200+ differentially expressed genes, what do those expression changes mean, to which biological processes do these relate?</p>
 <p>Perhaps you had a very clearly defined hypothesis, and can link some of the top differentially expressed genes to your research question. Great!</p>
 <p>Otherwise (and more common probably) you’ll need to now start a carefull dissection of your results to design validation and follow-up experiments. This can be done by many means, which we’ll partially dive into in the next section.</p>
+<p><mwadd>TO DO: add important caveat here: RNA-seq is nice but really needs validation because fo noise and RNA ≠ protein expression.</mwadd></p>
 <p>Next, we will display the our gene expression data in a heatmap, another popular plot of choice for RNA-seq experiments. In addition, we will look into charactering the molecular functions of up- and down-regulated genes using GO term annotation and enrichment.</p>
 
 

@@ -13,7 +13,7 @@ format:
 
 ### Feedback    
     
-I thikn the general outline is there, though I would consider some changes.
+I think the general outline is there, though I would consider some changes.
 
 The tutorial is now quite text heavy, I think it could benefit from adding more
 diagrams, highlight boxes, lists etc that emphasize take home messages and learning goals,

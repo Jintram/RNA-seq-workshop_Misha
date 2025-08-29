@@ -298,6 +298,13 @@
     "text": "(MW)\n\n\nThis is coming along very nicely!! And I think it might be managable to compress everything in 2-3 afternoons.\nI have added feedback to each of the episodes in these orange boxes.\n– Martijn\n\n\n(TO DO: Add this from notes.)\nWelcome to the RNA-seq workshop of the bioDSC. This workshop will introduce you to the basics of gene expression analysis using RNA-Seq. It is going to be fun and empowering! You will discover how the total RNA pool of an organism is converted to short sequences called “reads” that can in turn be used to get insights into gene expression. Through careful experimental design, this gene expression information can answer research questions and offer biological insights.\nThe workshop consists of two core parts:\nThe materials on this website are meant to be discussed in two four-hour trainer-led workshop sessions. However, it should also be possible to follow the materials on your own, at your own pace. Regardless of how you go through the materials, we hope that you will learn something useful!"
   },
   {
+    "objectID": "index.html#feedback",
+    "href": "index.html#feedback",
+    "title": "Welcome",
+    "section": "",
+    "text": "This is coming along very nicely!! And I think it might be managable to compress everything in 2-3 afternoons.\nI have added feedback to each of the episodes in these orange boxes.\n– Martijn\n\n\n(TO DO: Add this from notes.)"
+  },
+  {
     "objectID": "index.html#learning-objectives",
     "href": "index.html#learning-objectives",
     "title": "Welcome",
@@ -324,19 +331,5 @@
     "title": "Welcome",
     "section": "Credits",
     "text": "Credits\nThis workshop is based on other teaching materials available online. The primary source is the RNA-seq lesson designed by the Science Park Study Group, which in turn was based on Harvard Chan Bioinformatics Core RNA-seq materials."
-  },
-  {
-    "objectID": "index.html#some-general-feedback",
-    "href": "index.html#some-general-feedback",
-    "title": "Welcome",
-    "section": "",
-    "text": "This is coming along very nicely!! And I think it might be managable to compress everything in 2-3 afternoons.\nI have added feedback to each of the episodes in these orange boxes.\n\n\n(TO DO: Add this from notes.)"
-  },
-  {
-    "objectID": "index.html#feedback",
-    "href": "index.html#feedback",
-    "title": "Welcome",
-    "section": "",
-    "text": "This is coming along very nicely!! And I think it might be managable to compress everything in 2-3 afternoons.\nI have added feedback to each of the episodes in these orange boxes.\n– Martijn\n\n\n(TO DO: Add this from notes.)"
   }
 ]
